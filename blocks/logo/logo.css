@@ -1,0 +1,9 @@
+.logo {
+  max-width: 142px;
+  min-height: 33px;
+  transition: opacity .5s ease-in;
+}
+
+.logo:hover {
+  opacity: .5;
+}

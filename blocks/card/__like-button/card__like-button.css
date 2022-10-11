@@ -1,0 +1,12 @@
+.card__like-button {
+  padding: 0;
+  width: 22px;
+  height: 19px;
+  border: 0;
+  background-image: url(../../../images/icon/icon-like-white.svg);
+  background-color: inherit;
+}
+
+.card__like-button:hover {
+  cursor: pointer;
+}

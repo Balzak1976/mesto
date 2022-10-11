@@ -18,6 +18,16 @@
 @import url('../blocks/profile/__info/profile__info.css');
 @import url('../blocks/profile/__user-name/profile__user-name.css');
 @import url('../blocks/profile/__user-occupation/profile__user-occupation.css');
+/* cards */
+@import url('../blocks/cards/cards.css');
+@import url('../blocks/cards/__list/cards__list.css');
+/* card */
+@import url('../blocks/card/card.css');
+@import url('../blocks/card/__image/card__image.css');
+@import url('../blocks/card/__body/card__body.css');
+@import url('../blocks/card/__title/card__title.css');
+@import url('../blocks/card/__like-button/card__like-button.css');
+@import url('../blocks/card/__like-button/_active/card__like-button_active.css');
 /* footer */
 @import url('../blocks/footer/footer.css');
 @import url('../blocks/footer/__copyright/footer__copyright.css');

@@ -4,11 +4,20 @@
 @import url('../blocks/page/page.css');
 /* logo */
 @import url('../blocks/logo/logo.css');
+/* edit-button */
+@import url('../blocks/edit-button/edit-button.css');
+/* add-button */
+@import url('../blocks/add-button/add-button.css');
 /* header */
 @import url('../blocks/header/header.css');
 /* content */
 @import url('../blocks/content/content.css');
-
+/* profile */
+@import url('../blocks/profile/profile.css');
+@import url('../blocks/profile/__user-avatar/profile__user-avatar.css');
+@import url('../blocks/profile/__info/profile__info.css');
+@import url('../blocks/profile/__user-name/profile__user-name.css');
+@import url('../blocks/profile/__user-occupation/profile__user-occupation.css');
 /* footer */
 @import url('../blocks/footer/footer.css');
 @import url('../blocks/footer/__copyright/footer__copyright.css');

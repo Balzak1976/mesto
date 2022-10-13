@@ -1,8 +1,17 @@
 .root {
+  padding: 45px 19px 60px;
+  box-sizing: border-box;
   background-color: #000;
   font-family: 'Inter', Arial, sans-serif;
   font-style: normal;
   color: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media screen and (max-width: 400px) {
+  .root {
+    padding-top: 28px;
+    padding-bottom: 36px;
+  }
 }

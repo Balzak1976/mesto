@@ -1,9 +1,17 @@
 .logo {
   max-width: 142px;
   min-height: 33px;
-  transition: opacity .5s ease-in;
+  /* transition: opacity .5s ease-in; */
 }
 
-.logo:hover {
+/* .logo:hover {
   opacity: .5;
+} */
+
+@media screen and (max-width: 400px) {
+  .logo {
+    max-width: 103.74px;
+    min-height: 24.4px;
+  }
+
 }

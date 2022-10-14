@@ -2,13 +2,11 @@
   margin: auto;
   padding: 36px;
   flex: 0 1 430px;
-  /* min-height: 330px; */
   box-sizing: border-box;
   border-radius: 10px;
   position: relative;
   display: flex;
   flex-direction: column;
-  z-index: 10;
   background-color: #fff;
 }
 

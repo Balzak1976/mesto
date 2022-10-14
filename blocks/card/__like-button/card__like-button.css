@@ -5,8 +5,10 @@
   border: 0;
   background-image: url(../../../images/icon/icon-like-white.svg);
   background-color: inherit;
+  transition: opacity .5s ease-in;
 }
 
 .card__like-button:hover {
   cursor: pointer;
+  opacity: .5;
 }

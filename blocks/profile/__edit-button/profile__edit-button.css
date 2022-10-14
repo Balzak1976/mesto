@@ -5,6 +5,12 @@
   border: 1px solid #fff;
   background-color: inherit;
   position: relative;
+  transition: opacity .5s ease-in;
+}
+
+.profile__edit-button:hover {
+  cursor: pointer;
+  opacity: .6;
 }
 
 .profile__edit-button::before {

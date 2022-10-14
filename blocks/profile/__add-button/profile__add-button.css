@@ -6,6 +6,12 @@
   border: 2px solid #fff;
   background-color: inherit;
   position: relative;
+  transition: opacity .5s ease-in;
+}
+
+.profile__add-button:hover {
+  cursor: pointer;
+  opacity: .6;
 }
 
 .profile__add-button::before {

@@ -1,0 +1,17 @@
+.form__item {
+  min-height: 27px;
+  padding: 1px 2px 10px 2px;
+  box-sizing: border-box;
+  outline: none;
+  border-top:  0;
+  border-right: 0;
+  border-bottom: 1px solid rgb(0 0 0 / 0.2);
+  border-left: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.22;
+}
+
+.form__item:focus {
+  border: 1px solid rgb(0, 191, 255);
+}

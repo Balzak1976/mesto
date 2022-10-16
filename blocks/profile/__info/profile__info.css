@@ -1,14 +1,5 @@
 .profile__info {
-  display: grid;
-  align-items: center;
-  grid-template-columns: max-content min-content;
-  grid-template-rows: auto auto;
-  column-gap: 18px;
+  display: flex;
+  flex-direction: column;
   row-gap: 8px;
-}
-
-@media screen and (max-width: 400px) {
-  .profile__info {
-    column-gap: 10px;
-  }
 }

@@ -4,7 +4,10 @@
   height: 24px;
   border: 1px solid #fff;
   background-color: inherit;
-  position: relative;
+  background-image: url(../../../images/icon/icon-edit.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 42%;
   transition: opacity .5s ease-in;
 }
 
@@ -13,27 +16,12 @@
   opacity: .6;
 }
 
-.profile__edit-button::before {
-  content: "";
-  display: block;
-  width: 10px;
-  height: 10px;
-  background-image: url(../../../images/icon/icon-edit.svg);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
 @media screen and (max-width: 400px) {
   .profile__edit-button {
     width: 18px;
     height: 18px;
+    position: absolute;
+    right: -28px;
+    bottom: 22%;
   }
-
-  .profile__edit-button::before {
-    width: 7.5px;
-    height: 7.5px;
-  }
-
 }

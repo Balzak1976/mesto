@@ -5,25 +5,16 @@
   height: 50px;
   border: 2px solid #fff;
   background-color: inherit;
-  position: relative;
+  background-image: url(../../../images/icon/icon-add.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 22px;
   transition: opacity .5s ease-in;
 }
 
 .profile__add-button:hover {
   cursor: pointer;
   opacity: .6;
-}
-
-.profile__add-button::before {
-  content: "";
-  display: block;
-  width: 22px;
-  height: 22px;
-  background-image: url(../../../images/icon/icon-add.svg);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 @media screen and (max-width: 705px) {

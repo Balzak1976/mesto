@@ -31,13 +31,19 @@
             <h1 class="profile__user-name">
               Жак-Ив Кусто
             </h1>
-            <button class="profile__edit-button"></button>
+            <button
+              class="profile__edit-button"
+              type="button"
+            ></button>
           </div>
           <p class="profile__user-occupation">
             Исследователь океана
           </p>
         </article>
-        <button class="profile__add-button"></button>
+        <button
+          class="profile__add-button"
+          type="button"
+        ></button>
       </section>
       <!-- /.profile -->
 
@@ -52,7 +58,10 @@
               >
               <div class="card__body">
                 <h2 class="card__title">Карачаевск</h2>
-                <button class="card__like-button card__like-button_active"></button>
+                <button
+                  class="card__like-button card__like-button_active"
+                  type="button"
+                ></button>
               </div>
             </article>
           </li>
@@ -65,7 +74,10 @@
               >
               <div class="card__body">
                 <h2 class="card__title">Гора Эльбрус</h2>
-                <button class="card__like-button"></button>
+                <button
+                  class="card__like-button"
+                  type="button"
+                ></button>
               </div>
             </article>
           </li>
@@ -78,7 +90,10 @@
               >
               <div class="card__body">
                 <h2 class="card__title">Домбай</h2>
-                <button class="card__like-button"></button>
+                <button
+                  class="card__like-button"
+                  type="button"
+                ></button>
               </div>
             </article>
           </li>
@@ -91,7 +106,10 @@
               >
               <div class="card__body">
                 <h2 class="card__title">Карачаевск</h2>
-                <button class="card__like-button"></button>
+                <button
+                  class="card__like-button"
+                  type="button"
+                ></button>
               </div>
             </article>
           </li>
@@ -104,7 +122,10 @@
               >
               <div class="card__body">
                 <h2 class="card__title">Гора Эльбрус</h2>
-                <button class="card__like-button"></button>
+                <button
+                  class="card__like-button"
+                  type="button"
+                ></button>
               </div>
             </article>
           </li>
@@ -117,7 +138,10 @@
               >
               <div class="card__body">
                 <h2 class="card__title">Домбай</h2>
-                <button class="card__like-button"></button>
+                <button
+                  class="card__like-button"
+                  type="button"
+                ></button>
               </div>
             </article>
           </li>
@@ -128,30 +152,6 @@
     </main>
     <!-- /.content -->
 
-    <section class="popup">
-      <div class="popup__container">
-        <button class="popup__close"></button>
-        <form class="form">
-          <h2 class="form__title">
-            Редактировать профиль
-          </h2>
-          <fieldset class="form__container">
-            <input
-              class="form__item form__item_user_name"
-              value=""
-              type="text"
-            >
-            <input
-              class="form__item form__item_user_occupation" value="Исследователь океана"
-              type="text"
-            >
-          </fieldset>
-          <button class="form__submit">Сохранить</button>
-        </form>
-      </div>
-    </section>
-    <!-- /.popup -->
-
     <footer class="footer">
       <p class="footer__copyright">
         &copy; 2022. Максим Скороходов
@@ -159,10 +159,51 @@
     </footer>
     <!-- /.footer -->
 
-    <script src="./scripts/index.js"></script>
+    <section class="popup">
+      <div class="popup__container">
+        <button
+          class="popup__close"
+          type="button"
+        ></button>
+        <h2 class="popup__title">
+          Редактировать профиль
+        </h2>
+
+        <form
+          class="form"
+          method="POST"
+          action="./index.html"
+          name="userProfile"
+        >
+          <fieldset class="form__container">
+            <input
+              class="form__item form__item_user_name"
+              name="userName"
+              type="text"
+              value=""
+            >
+            <input
+              class="form__item form__item_user_occupation"
+              name="userOccupation"
+              type="text"
+              value=""
+            >
+          </fieldset>
+          <button
+            class="form__submit"
+            name="submit"
+            type="submit"
+          >Сохранить</button>
+        </form>
+        <!-- /.form -->
+        
+      </div>
+    </section>
+    <!-- /.popup -->
 
   </div>
   <!-- /.page -->
 
+  <script src="./scripts/index.js"></script>
 </body>
 </html>

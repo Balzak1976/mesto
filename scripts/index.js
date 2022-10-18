@@ -1,5 +1,3 @@
-"use strict";
-
 let profileElement = document.querySelector('.profile');
 let profileUserName = profileElement.querySelector('.profile__user-name');
 let profileUserOccupation = profileElement.querySelector('.profile__user-occupation');
@@ -12,20 +10,23 @@ let popupCloseButton = popupElement.querySelector('.popup__close');
 let formElement = document.querySelector('.form');
 let formUserName = formElement.querySelector('.form__item_user_name');
 let formUserOccupation = formElement.querySelector('.form__item_user_occupation');
-let formSubmit = formElement.querySelector('.form__submit');
 
 // open popup
-profileEditButton.addEventListener('click', function() {
+profileEditButton.addEventListener('click', openPopup);
+
+function openPopup() {
   formUserName.value = profileUserName.textContent.trim();
   formUserOccupation.value = profileUserOccupation.textContent.trim();
 
   popupElement.classList.add('popup_opened');
-});
+}
 
 // close popup
-popupCloseButton.addEventListener('click', function() {
+popupCloseButton.addEventListener('click', closePopup);
+
+function closePopup() {
   popupElement.classList.remove('popup_opened');
-});
+}
 
 // close popup by click on overlay
 popupElement.addEventListener('click', function(event) {
@@ -35,7 +36,9 @@ popupElement.addEventListener('click', function(event) {
 });
 
 // form
-formSubmit.addEventListener('click', function(evt) {
+formElement.addEventListener('submit', formSubmitHandler);
+
+function formSubmitHandler (evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
 
   if (formUserName.value !== '') {
@@ -46,5 +49,5 @@ formSubmit.addEventListener('click', function(evt) {
     profileUserOccupation.textContent = formUserOccupation.value;
   }
 
-  popupElement.classList.remove('popup_opened');
-});
+  closePopup();
+}

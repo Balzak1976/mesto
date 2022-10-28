@@ -49,7 +49,8 @@
 
       <section class="cards">
         <ul class="cards__list">
-          <li>
+          <!-- cardsContainer -->
+          <li class="card__item">
             <article class="card">
               <img
                 class="card__image"
@@ -159,10 +160,11 @@
     </footer>
     <!-- /.footer -->
 
-    <section class="popup">
+    <!-- popup-profile -->
+    <section class="popup popup_type_profile">
       <div class="popup__container">
         <button
-          class="popup__close"
+          class="popup__close popup__close_type_profile"
           type="button"
         ></button>
         <h2 class="popup__title">
@@ -196,13 +198,81 @@
           >Сохранить</button>
         </form>
         <!-- /.form -->
-        
+
       </div>
     </section>
-    <!-- /.popup -->
+    <!-- /.popup-profile -->
+
+    <!-- popup-card -->
+    <section class="popup popup_type_card">
+      <div class="popup__container">
+        <button
+          class="popup__close popup__close_type_card"
+          type="button"
+        ></button>
+        <h2 class="popup__title">
+          Новое место
+        </h2>
+
+        <form
+          class="form"
+          method="POST"
+          action="./index.html"
+          name="addCard"
+        >
+          <fieldset class="form__container">
+            <input
+              class="form__item form__item_card_name"
+              placeholder="Название"
+              name="cardName"
+              type="text"
+              value=""
+            >
+            <input
+              class="form__item form__item_card_img-link"
+              placeholder="Ссылка на картинку"
+              name="cardImgLink"
+              type="text"
+              value=""
+            >
+          </fieldset>
+          <button
+            class="form__submit"
+            name="submit"
+            type="submit"
+          >Сохранить</button>
+        </form>
+        <!-- /.form -->
+
+      </div>
+    </section>
+    <!-- /.popup-card -->
 
   </div>
   <!-- /.page -->
+
+  <template class="card-template">
+    <li class="card__item">
+      <article class="card">
+        <button
+          class="card__del-button"
+          type="button"
+        ></button>
+        <img
+          class="card__image"
+          src=""
+          alt=""
+        >
+        <div class="card__body">
+          <h2 class="card__title"></h2>
+          <button
+            class="card__like-button"
+            type="button"
+          ></button>
+        </div>
+      </article>
+    </li>
+  </template>
 
   <script src="./scripts/index.js"></script>
 </body>

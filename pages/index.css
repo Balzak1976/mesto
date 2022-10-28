@@ -22,6 +22,7 @@
 @import url('../blocks/cards/__list/cards__list.css');
 /* card */
 @import url('../blocks/card/card.css');
+@import url('../blocks/card/__del-button/card__del-button.css');
 @import url('../blocks/card/__image/card__image.css');
 @import url('../blocks/card/__body/card__body.css');
 @import url('../blocks/card/__title/card__title.css');

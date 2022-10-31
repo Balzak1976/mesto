@@ -50,24 +50,6 @@
       <section class="cards">
         <ul class="cards__list">
           <!-- cardsContainer -->
-
-          <li class="card__item">
-            <article class="card">
-              <img
-                class="card__image"
-                src="./images/carachaevsk1.jpg"
-                alt="Изображение старой церкви"
-              >
-              <div class="card__body">
-                <h2 class="card__title">Карачаевск</h2>
-                <button
-                  class="card__like-button card__like-button_active"
-                  type="button"
-                ></button>
-              </div>
-            </article>
-          </li>
-
         </ul>
       </section>
       <!-- /.cards -->
@@ -125,7 +107,7 @@
     </section>
     <!-- /.popup-profile -->
 
-    <!-- popup-card -->
+    <!-- popup-new-card -->
     <section class="popup popup_type_card">
       <div class="popup__container">
         <button
@@ -162,13 +144,32 @@
             class="form__submit"
             name="submit"
             type="submit"
-          >Сохранить</button>
+          >Создать</button>
         </form>
         <!-- /.form -->
 
       </div>
     </section>
-    <!-- /.popup-card -->
+    <!-- /.popup-new-card -->
+
+    <!-- popup-zoom-picture -->
+    <section class="popup popup_type_zoom-picture">
+      <div class="popup__container popup__container_type_zoom-picture">
+        <button
+          class="popup__close popup__close_type_zoom-picture"
+          type="button"
+        ></button>
+        <figure class="zoom-picture">
+          <img
+            class="zoom-picture__image"
+            src=""
+            alt=""
+          >
+          <figcaption class="zoom-picture__caption"></figcaption>
+        </figure>
+      </div>
+    </section>
+    <!-- /.popup-zoom-picture -->
 
   </div>
   <!-- /.page -->

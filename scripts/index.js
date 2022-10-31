@@ -1,4 +1,5 @@
 //============================ PROFILE =======================================
+
 const profileElement = document.querySelector('.profile');
 const profileUserName = profileElement.querySelector('.profile__user-name');
 const profileUserOccupation = profileElement.querySelector(
@@ -33,57 +34,59 @@ popupProfileCloseButton.addEventListener('click', () =>
 // profile form
 formProfileElement.addEventListener('submit', ProfileFormHandler);
 
-closePopupByClickOnOverlay (popupProfileElement);
-
-
+closePopupByClickOnOverlay(popupProfileElement);
 
 //============================ CARDS ==========================================
+
 const cardsContainer = document.querySelector('.cards__list');
 // render card
 const initialCards = [
   {
     name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg',
   },
   {
     name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg',
   },
   {
     name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg',
   },
   {
     name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg',
   },
   {
     name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg',
   },
   {
     name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg',
+  },
 ];
 
-initialCards.forEach(card => { renderCard(card); });
+initialCards.forEach((card) => {
+  renderCard(card);
+});
 
-// popup-card
+// popup new card
 const popupCardElement = document.querySelector('.popup_type_card');
 const popupCardCloseButton = popupCardElement.querySelector(
   '.popup__close_type_card'
 );
 
 // card listener
-profileAddButton.addEventListener('click', () =>
-  openPopup(popupCardElement)
-);
+profileAddButton.addEventListener('click', () => {
+  openPopup(popupCardElement);
+  clearFormCardValue();
+});
 popupCardCloseButton.addEventListener('click', () =>
   closePopup(popupCardElement)
 );
 
-// card form
+// new card form
 const formCardElement = document.querySelector('.form_type_card');
 const formCardName = formCardElement.querySelector('.form__item_card_name');
 const formCardImgLink = formCardElement.querySelector(
@@ -92,39 +95,30 @@ const formCardImgLink = formCardElement.querySelector(
 
 formCardElement.addEventListener('submit', cardFormHandler);
 
-closePopupByClickOnOverlay (popupCardElement);
+closePopupByClickOnOverlay(popupCardElement);
 
+// popup zoom picture
+const popupZoomPictureElement = document.querySelector(
+  '.popup_type_zoom-picture'
+);
+const popupZoomPictureCloseButton = popupZoomPictureElement.querySelector(
+  '.popup__close_type_zoom-picture'
+);
+const zoomPictureElement = document.querySelector('.zoom-picture');
 
+popupZoomPictureCloseButton.addEventListener('click', () => {
+  closePopup(popupZoomPictureElement);
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+closePopupByClickOnOverlay(popupZoomPictureElement);
 
 //============================ FUNCTION =======================================
-function closePopupByClickOnOverlay (popupElement) {
 
-  popupElement.addEventListener('click', function(event) {
+function closePopupByClickOnOverlay(popupElement) {
+  popupElement.addEventListener('click', function (event) {
     if (event.target === event.currentTarget) {
       popupElement.classList.remove('popup_opened');
-    };
+    }
   });
 }
 
@@ -152,10 +146,10 @@ function ProfileFormHandler(evt) {
     profileUserOccupation.textContent = formUserOccupation.value;
   }
 
-  closePopup(popupProfileElement)
+  closePopup(popupProfileElement);
 }
 
-function createCard (data) {
+function createCard(data) {
   const cardTemplate = document.querySelector('.card-template').content;
 
   // клонируем содержимое тега template
@@ -163,44 +157,49 @@ function createCard (data) {
 
   // наполняем содержимым
   cardElement.querySelector('.card__image').src = data.link;
-  cardElement.querySelector('.card__image').name = data.name;
+  cardElement.querySelector('.card__image').alt = data.name;
   cardElement.querySelector('.card__title').textContent = data.name;
 
   // навешиваем обработчики на карточку
-  createListenerCard (cardElement);
+  setEventListener(cardElement);
 
   return cardElement;
 }
 
-function renderCard (data) {
+function renderCard(data) {
   // Создаем карточку на основе данных
   const cardElement = createCard(data);
   // Помещаем ее в контейнер карточек
   cardsContainer.prepend(cardElement);
 }
 
-function createListenerCard (card) {
-  const deleteCardButton = card.querySelector('.card__del-button');
-  const cardLikeButton = card.querySelector('.card__like-button');
+function setEventListener(element) {
+  const deleteCardButton = element.querySelector('.card__del-button');
+  const cardImage = element.querySelector('.card__image');
+  const cardLikeButton = element.querySelector('.card__like-button');
 
   deleteCardButton.addEventListener('click', () => {
-    deleteCard(deleteCardButton)
+    deleteCard(deleteCardButton);
+  });
+
+  cardImage.addEventListener('click', () => {
+    currentCardHandler(element);
   });
 
   cardLikeButton.addEventListener('click', () => {
-    toggleLikeButton(cardLikeButton)
+    toggleLikeButton(cardLikeButton);
   });
 }
 
-function deleteCard (element) {
+function deleteCard(element) {
   element.closest('.card__item').remove();
 }
 
-function toggleLikeButton (element) {
+function toggleLikeButton(element) {
   element.classList.toggle('card__like-button_active');
 }
 
-function cardFormHandler (evt) {
+function cardFormHandler(evt) {
   evt.preventDefault();
 
   const isLink = /^https?(:\/\/).+(.jpg|.png)$/.test(
@@ -208,17 +207,36 @@ function cardFormHandler (evt) {
   );
 
   if (formCardName.value !== '' && isLink) {
-
     const data = {};
 
     data.name = formCardName.value;
     data.link = formCardImgLink.value;
 
     closePopup(popupCardElement);
-    formCardName.value = '';
-    formCardImgLink.value = '';
-
     renderCard(data);
   }
 }
 
+function clearFormCardValue () {
+  formCardName.value = '';
+  formCardImgLink.value = '';
+}
+
+function currentCardHandler(element) {
+  const cardImage = element.querySelector('.card__image');
+  const cardTitle = element.querySelector('.card__title');
+
+  const zoomPictureImg = zoomPictureElement.querySelector(
+    '.zoom-picture__image'
+  );
+  const zoomPictureImgCaption = zoomPictureElement.querySelector(
+    '.zoom-picture__caption'
+  );
+
+  openPopup(popupZoomPictureElement);
+
+  zoomPictureImg.src = cardImage.src;
+  zoomPictureImg.alt = cardImage.alt;
+
+  zoomPictureImgCaption.textContent = cardTitle.textContent;
+}

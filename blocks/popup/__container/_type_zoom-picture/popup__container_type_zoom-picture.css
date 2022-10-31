@@ -1,0 +1,6 @@
+.popup__container_type_zoom-picture {
+  padding: 0;
+  flex: 0 1 auto;
+  border-radius: 0;
+  background-color: transparent;
+}

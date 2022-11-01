@@ -220,19 +220,13 @@ function toggleLikeButton(element) {
 function cardFormHandler(evt) {
   evt.preventDefault();
 
-  const isLink = /^https?(:\/\/).+(.jpg|.png)$/.test(
-    formCardImgLink.value.trim()
-  );
+  const data = {};
 
-  if (formCardName.value !== '' && isLink) {
-    const data = {};
+  data.name = formCardName.value;
+  data.link = formCardImgLink.value;
 
-    data.name = formCardName.value;
-    data.link = formCardImgLink.value;
-
-    closePopup(popupCardElement);
-    renderCard(data);
-  }
+  closePopup(popupCardElement);
+  renderCard(data);
 }
 
 function clearFormCardValue () {

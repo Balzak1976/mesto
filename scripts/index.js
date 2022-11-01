@@ -91,7 +91,7 @@ const formCardElement = document.querySelector('.form_type_card');
 const formCardName = formCardElement.querySelector('.form__item_card_name');
 const formCardImgLink = formCardElement.querySelector(
   '.form__item_card_img-link'
-);
+  );
 
 formCardElement.addEventListener('submit', cardFormHandler);
 
@@ -105,6 +105,12 @@ const popupZoomPictureCloseButton = popupZoomPictureElement.querySelector(
   '.popup__close_type_zoom-picture'
 );
 const zoomPictureElement = document.querySelector('.zoom-picture');
+const zoomPictureImg = zoomPictureElement.querySelector(
+  '.zoom-picture__image'
+);
+const zoomPictureCaption = zoomPictureElement.querySelector(
+  '.zoom-picture__caption'
+);
 
 popupZoomPictureCloseButton.addEventListener('click', () => {
   closePopup(popupZoomPictureElement);
@@ -178,21 +184,33 @@ function setEventListener(element) {
   const cardImage = element.querySelector('.card__image');
   const cardLikeButton = element.querySelector('.card__like-button');
 
-  deleteCardButton.addEventListener('click', () => {
-    deleteCard(deleteCardButton);
+  deleteCardButton.addEventListener('click', function () {
+    deleteCard(this);
   });
 
   cardImage.addEventListener('click', () => {
     currentCardHandler(element);
   });
 
-  cardLikeButton.addEventListener('click', () => {
-    toggleLikeButton(cardLikeButton);
+  cardLikeButton.addEventListener('click', function () {
+    toggleLikeButton(this);
   });
 }
 
 function deleteCard(element) {
   element.closest('.card__item').remove();
+}
+
+function currentCardHandler(element) {
+  const currentCardImage = element.querySelector('.card__image');
+  const currentCardTitle = element.querySelector('.card__title');
+
+  openPopup(popupZoomPictureElement);
+
+  zoomPictureImg.src = currentCardImage.src;
+  zoomPictureImg.alt = currentCardImage.alt;
+
+  zoomPictureCaption.textContent = currentCardTitle.textContent;
 }
 
 function toggleLikeButton(element) {
@@ -220,23 +238,4 @@ function cardFormHandler(evt) {
 function clearFormCardValue () {
   formCardName.value = '';
   formCardImgLink.value = '';
-}
-
-function currentCardHandler(element) {
-  const cardImage = element.querySelector('.card__image');
-  const cardTitle = element.querySelector('.card__title');
-
-  const zoomPictureImg = zoomPictureElement.querySelector(
-    '.zoom-picture__image'
-  );
-  const zoomPictureImgCaption = zoomPictureElement.querySelector(
-    '.zoom-picture__caption'
-  );
-
-  openPopup(popupZoomPictureElement);
-
-  zoomPictureImg.src = cardImage.src;
-  zoomPictureImg.alt = cardImage.alt;
-
-  zoomPictureImgCaption.textContent = cardTitle.textContent;
 }

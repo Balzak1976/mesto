@@ -49,102 +49,7 @@
 
       <section class="cards">
         <ul class="cards__list">
-          <li>
-            <article class="card">
-              <img
-                class="card__image"
-                src="./images/carachaevsk1.jpg"
-                alt="Изображение старой церкви"
-              >
-              <div class="card__body">
-                <h2 class="card__title">Карачаевск</h2>
-                <button
-                  class="card__like-button card__like-button_active"
-                  type="button"
-                ></button>
-              </div>
-            </article>
-          </li>
-          <li>
-            <article class="card">
-              <img
-                class="card__image"
-                src="./images/elbrus1.jpg"
-                alt="Изображение горы Эльбрус"
-              >
-              <div class="card__body">
-                <h2 class="card__title">Гора Эльбрус</h2>
-                <button
-                  class="card__like-button"
-                  type="button"
-                ></button>
-              </div>
-            </article>
-          </li>
-          <li>
-            <article class="card">
-              <img
-                class="card__image"
-                src="./images/dombay1.jpg"
-                alt="Изображение горной реки"
-              >
-              <div class="card__body">
-                <h2 class="card__title">Домбай</h2>
-                <button
-                  class="card__like-button"
-                  type="button"
-                ></button>
-              </div>
-            </article>
-          </li>
-          <li>
-            <article class="card">
-              <img
-                class="card__image"
-                src="./images/carachaevsk2.jpg"
-                alt="Изображение тумана в горах"
-              >
-              <div class="card__body">
-                <h2 class="card__title">Карачаевск</h2>
-                <button
-                  class="card__like-button"
-                  type="button"
-                ></button>
-              </div>
-            </article>
-          </li>
-          <li>
-            <article class="card">
-              <img
-                class="card__image"
-                src="./images/elbrus2.jpg"
-                alt="Изображение горы Эльбрус"
-              >
-              <div class="card__body">
-                <h2 class="card__title">Гора Эльбрус</h2>
-                <button
-                  class="card__like-button"
-                  type="button"
-                ></button>
-              </div>
-            </article>
-          </li>
-          <li>
-            <article class="card">
-              <img
-                class="card__image"
-                src="./images/dombay2.jpg"
-                alt="Изображение поселения в горах"
-              >
-              <div class="card__body">
-                <h2 class="card__title">Домбай</h2>
-                <button
-                  class="card__like-button"
-                  type="button"
-                ></button>
-              </div>
-            </article>
-          </li>
+          <!-- cardsContainer -->
         </ul>
       </section>
       <!-- /.cards -->
@@ -159,10 +64,10 @@
     </footer>
     <!-- /.footer -->
 
-    <section class="popup">
+    <section class="popup popup_type_profile">
       <div class="popup__container">
         <button
-          class="popup__close"
+          class="popup__close popup__close_type_profile"
           type="button"
         ></button>
         <h2 class="popup__title">
@@ -170,7 +75,7 @@
         </h2>
 
         <form
-          class="form"
+          class="form form_type_profile"
           method="POST"
           action="./index.html"
           name="userProfile"
@@ -196,13 +101,98 @@
           >Сохранить</button>
         </form>
         <!-- /.form -->
-        
+
       </div>
     </section>
-    <!-- /.popup -->
+    <!-- /.popup-profile -->
+
+    <section class="popup popup_type_card">
+      <div class="popup__container">
+        <button
+          class="popup__close popup__close_type_card"
+          type="button"
+        ></button>
+        <h2 class="popup__title">
+          Новое место
+        </h2>
+
+        <form
+          class="form form_type_card"
+          method="POST"
+          action="./index.html"
+          name="addCard"
+        >
+          <fieldset class="form__container">
+            <input
+              class="form__item form__item_card_name"
+              placeholder="Название"
+              name="cardName"
+              type="text"
+              value=""
+            >
+            <input
+              class="form__item form__item_card_img-link"
+              placeholder="Ссылка на картинку"
+              name="cardImgLink"
+              type="text"
+              value=""
+            >
+          </fieldset>
+          <button
+            class="form__submit"
+            name="submit"
+            type="submit"
+          >Создать</button>
+        </form>
+        <!-- /.form -->
+
+      </div>
+    </section>
+    <!-- /.popup-new-card -->
+
+    <section class="popup popup_type_zoom-picture">
+      <div class="popup__container popup__container_type_zoom-picture">
+        <button
+          class="popup__close popup__close_type_zoom-picture"
+          type="button"
+        ></button>
+        <figure class="zoom-picture">
+          <img
+            class="zoom-picture__image"
+            src=""
+            alt=""
+          >
+          <figcaption class="zoom-picture__caption"></figcaption>
+        </figure>
+      </div>
+    </section>
+    <!-- /.popup-zoom-picture -->
 
   </div>
   <!-- /.page -->
+
+  <template class="card-template">
+    <li class="card__item">
+      <article class="card">
+        <button
+          class="card__del-button"
+          type="button"
+        ></button>
+        <img
+          class="card__image"
+          src=""
+          alt=""
+        >
+        <div class="card__body">
+          <h2 class="card__title"></h2>
+          <button
+            class="card__like-button"
+            type="button"
+          ></button>
+        </div>
+      </article>
+    </li>
+  </template>
 
   <script src="./scripts/index.js"></script>
 </body>

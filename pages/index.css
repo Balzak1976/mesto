@@ -22,6 +22,7 @@
 @import url('../blocks/cards/__list/cards__list.css');
 /* card */
 @import url('../blocks/card/card.css');
+@import url('../blocks/card/__del-button/card__del-button.css');
 @import url('../blocks/card/__image/card__image.css');
 @import url('../blocks/card/__body/card__body.css');
 @import url('../blocks/card/__title/card__title.css');
@@ -32,7 +33,9 @@
 @import url('../blocks/footer/__copyright/footer__copyright.css');
 /* popup */
 @import url('../blocks/popup/popup.css');
+@import url('../blocks/popup/_type_zoom-picture/popup_type_zoom-picture.css');
 @import url('../blocks/popup/__container/popup__container.css');
+@import url('../blocks/popup/__container/_type_zoom-picture/popup__container_type_zoom-picture.css');
 @import url('../blocks/popup/__title/popup__title.css');
 @import url('../blocks/popup/__close/popup__close.css');
 @import url('../blocks/popup/_opened/popup_opened.css');
@@ -41,3 +44,7 @@
 @import url('../blocks/form/__container/form__container.css');
 @import url('../blocks/form/__item/form__item.css');
 @import url('../blocks/form/__submit/form__submit.css');
+/* zoom-picture */
+@import url('../blocks/zoom-picture/zoom-picture.css');
+@import url('../blocks/zoom-picture/__image/zoom-picture__image.css');
+@import url('../blocks/zoom-picture/__caption/zoom-picture__caption.css');

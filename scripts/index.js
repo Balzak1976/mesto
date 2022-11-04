@@ -51,7 +51,7 @@ cardsContainer.addEventListener('click', function (evt) {
   }
 
   if (evt.target.classList.contains('card__image')) {
-    currentCardHandlerImage(evt.target);
+    currentCardOpenZoomPictureHandler(evt.target);
   }
 
   if (evt.target.classList.contains('card__like-button')) {
@@ -168,7 +168,7 @@ function deleteCard(deleteCardButton) {
   deleteCardButton.closest('.card__item').remove();
 }
 
-function currentCardHandlerImage(img) {
+function currentCardOpenZoomPictureHandler(img) {
   openPopup(popupZoomPictureElement);
 
   zoomPictureImg.src = img.src;

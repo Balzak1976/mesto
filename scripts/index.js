@@ -16,20 +16,22 @@ const popupProfileCloseButton = popupProfileElement.querySelector(
 
 // form-profile
 const formProfileElement = document.querySelector(".form_type_profile");
-const formUserName = formProfileElement.querySelector(".form__item_user_name");
+const formUserName = formProfileElement.querySelector(".form__input_user_name");
 const formUserOccupation = formProfileElement.querySelector(
-  ".form__item_user_occupation"
+  ".form__input_user_occupation"
 );
 
 // profile listener
 profileEditButton.addEventListener("click", () => {
   fillProfilePopupFromProfile();
   openPopup(popupProfileElement);
+  formValidityHandler(formProfileElement);
 });
 
-popupProfileCloseButton.addEventListener("click", () =>
-  closePopup(popupProfileElement)
-);
+popupProfileCloseButton.addEventListener("click", () => {
+  closePopup(popupProfileElement);
+  formProfileElement.reset();
+});
 
 // profile form
 formProfileElement.addEventListener("submit", profileFormHandler);
@@ -70,9 +72,9 @@ const popupCardCloseButton = popupCardElement.querySelector(
 
 // new card form
 const formCardElement = document.querySelector(".form_type_card");
-const formCardName = formCardElement.querySelector(".form__item_card_name");
+const formCardName = formCardElement.querySelector(".form__input_card_name");
 const formCardImgLink = formCardElement.querySelector(
-  ".form__item_card_img-link"
+  ".form__input_card_img-link"
 );
 
 formCardElement.addEventListener("submit", cardFormHandler);
@@ -101,11 +103,14 @@ const zoomPictureCaption = zoomPictureElement.querySelector(
   ".zoom-picture__caption"
 );
 
-popupZoomPictureCloseButton.addEventListener("click", () => {
+const newLocal = "click";
+popupZoomPictureCloseButton.addEventListener(newLocal, () => {
   closePopup(popupZoomPictureElement);
 });
 
 initClosePopupByClickOnOverlay(popupZoomPictureElement);
+
+//====================== FUNCTION VALIDATION ===================================
 
 //============================ FUNCTION =======================================
 
@@ -187,4 +192,59 @@ function cardFormHandler(evt) {
 
   closePopup(popupCardElement);
   renderCard(data);
+}
+
+function showInputError(formElement, inputElement, errorMassage) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+
+  inputElement.classList.add("form__input_type_error");
+  errorElement.classList.add("form__input-error_active");
+
+  errorElement.textContent = errorMassage;
+}
+
+function hideInputError(formElement, inputElement) {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+
+  inputElement.classList.remove("form__input_type_error");
+  errorElement.classList.remove("form__input-error_active");
+
+  errorElement.textContent = "";
+}
+
+function checkInputValidity(formElement, inputElement) {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+}
+
+function formValidityHandler(formElement) {
+  const inputList = Array.from(formElement.querySelectorAll(".form__input"));
+  const submitButtonElement = formElement.querySelector(".form__submit");
+
+  toggleSubmitButtonState(inputList, submitButtonElement);
+
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener("input", () => {
+      checkInputValidity(formElement, inputElement);
+
+      toggleSubmitButtonState(inputList, submitButtonElement);
+    });
+  });
+}
+
+function hasInvalidInputs(inputList) {
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
+}
+
+function toggleSubmitButtonState(inputList, submitButtonElement) {
+  if (hasInvalidInputs(inputList)) {
+    submitButtonElement.classList.add("form__submit_inactive");
+  } else {
+    submitButtonElement.classList.remove("form__submit_inactive");
+  }
 }

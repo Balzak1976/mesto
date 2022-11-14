@@ -105,20 +105,33 @@
           name="userProfile"
         >
           <fieldset class="form__container">
-            <input
-              class="form__item form__item_user_name"
-              placeholder="Имя"
-              name="userName"
-              type="text"
-              required
-            >
-            <input
-              class="form__item form__item_user_occupation"
-              placeholder="О себе"
-              name="userOccupation"
-              type="text"
-              required
-            >
+            <label class="form__field">
+              <input
+                class="form__input form__input_user_name"
+                id="user-name-input"
+                placeholder="Имя"
+                name="userName"
+                type="text"
+                minlength="2"
+                maxlength="40"
+                required
+              >
+              <span class="form__input-error user-name-input-error"></span>
+            </label>
+            <label class="form__field">
+              <input
+                class="form__input form__input_user_occupation"
+                id="user-occupation-input"
+                placeholder="О себе"
+                name="userOccupation"
+                type="text"
+                minlength="2"
+                maxlength="200"
+                required
+              >
+              <span class="form__input-error user-occupation-input-error">
+              </span>
+            </label>
           </fieldset>
           <button
             class="form__submit"
@@ -148,20 +161,30 @@
           name="addCard"
         >
           <fieldset class="form__container">
-            <input
-              class="form__item form__item_card_name"
-              placeholder="Название"
-              name="cardName"
-              type="text"
-              required
-            >
-            <input
-              class="form__item form__item_card_img-link"
-              placeholder="Ссылка на картинку"
-              name="cardImgLink"
-              type="url"
-              required
-            >
+            <label class="form__field">
+              <input
+                class="form__input form__input_card_name"
+                id="card-name-input"
+                placeholder="Название"
+                name="cardName"
+                type="text"
+                required
+              >
+              <span class="form__input-error card-name-input-error">
+              </span>
+            </label>
+            <label class="form__field">
+              <input
+                class="form__input form__input_card_img-link"
+                id="cadr-img-link-input"
+                placeholder="Ссылка на картинку"
+                name="cardImgLink"
+                type="url"
+                required
+              >
+              <span class="form__input-error cadr-img-link-input-error">
+              </span>
+            </label>
           </fieldset>
           <button
             class="form__submit"

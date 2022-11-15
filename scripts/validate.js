@@ -71,7 +71,7 @@ function formValidityHandler(
   formElement,
   { inputSelector, submitButtonSelector, ...rest }
 ) {
-  const inputList = Array.from(formElement.querySelectorAll(inputSelector));
+  const inputList = [...formElement.querySelectorAll(inputSelector)];
   const buttonSubmitElement = formElement.querySelector(submitButtonSelector);
 
   toggleButtonSubmitState(inputList, buttonSubmitElement, rest);

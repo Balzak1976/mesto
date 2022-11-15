@@ -36,6 +36,7 @@ popupProfileCloseButton.addEventListener("click", () => {
 formProfileElement.addEventListener("submit", profileFormHandler);
 
 initClosePopupByClickOnOverlay(popupProfileElement);
+initClosePopupByClickOnEsc(popupProfileElement);
 
 //============================ CARDS ==========================================
 
@@ -89,8 +90,10 @@ popupCardCloseButton.addEventListener("click", () =>
 );
 
 initClosePopupByClickOnOverlay(popupCardElement);
+initClosePopupByClickOnEsc(popupCardElement);
 
-// popup zoom picture
+//======================== POPUP ZOOM PICTURE ==================================
+
 const popupZoomPictureElement = document.querySelector(
   ".popup_type_zoom-picture"
 );
@@ -109,21 +112,24 @@ popupZoomPictureCloseButton.addEventListener(newLocal, () => {
 });
 
 initClosePopupByClickOnOverlay(popupZoomPictureElement);
+initClosePopupByClickOnEsc(popupZoomPictureElement);
 
 //============================ FUNCTION =======================================
 
 function initClosePopupByClickOnOverlay(popupElement) {
-  popupElement.addEventListener("click", function (event) {
-    if (event.target === event.currentTarget) {
+  popupElement.addEventListener("click", (evt) => {
+    if (evt.target === evt.currentTarget) {
       closePopup(popupElement);
     }
   });
 }
 
-function initClosePopupByClickOnEsc(evt, popupElement) {
-  if (evt.key === "Escape") {
-    closePopup(popupElement);
-  }
+function initClosePopupByClickOnEsc(popupElement) {
+  document.addEventListener("keydown", (evt) => {
+    if (evt.key === "Escape") {
+      closePopup(popupElement);
+    }
+  });
 }
 
 function closePopup(popupElement) {

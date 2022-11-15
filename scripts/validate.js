@@ -1,11 +1,11 @@
-enableValidation({
+const selectors = {
   formSelector: ".form",
   inputSelector: ".form__input",
   submitButtonSelector: ".form__submit",
   inactiveButtonClass: "form__submit_inactive",
   inputErrorClass: "form__input_type_error",
   errorClass: "form__input-error_active",
-});
+};
 
 //============================ FUNCTION =======================================
 
@@ -74,6 +74,7 @@ function formValidityHandler(
   const inputList = [...formElement.querySelectorAll(inputSelector)];
   const buttonSubmitElement = formElement.querySelector(submitButtonSelector);
 
+  // Вызовем toggleButtonState, чтобы не ждать ввода данных в поля
   toggleButtonSubmitState(inputList, buttonSubmitElement, rest);
 
   inputList.forEach((inputElement) => {

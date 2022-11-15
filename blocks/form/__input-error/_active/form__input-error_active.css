@@ -1,7 +1,7 @@
 .form__input-error_active {
   position: absolute;
   left: 0;
-  top: 33px;
+  top: calc(100% + 5px);
   display: block;
   color: #FF0000;
   font-weight: 400;

@@ -25,7 +25,6 @@ const formUserOccupation = formProfileElement.querySelector(
 profileEditButton.addEventListener("click", () => {
   fillProfilePopupFromProfile();
   openPopup(popupProfileElement);
-  formValidityHandler(formProfileElement);
 });
 
 popupProfileCloseButton.addEventListener("click", () => {
@@ -84,6 +83,7 @@ profileAddButton.addEventListener("click", () => {
   openPopup(popupCardElement);
   formCardElement.reset();
 });
+
 popupCardCloseButton.addEventListener("click", () =>
   closePopup(popupCardElement)
 );
@@ -110,7 +110,9 @@ popupZoomPictureCloseButton.addEventListener(newLocal, () => {
 
 initClosePopupByClickOnOverlay(popupZoomPictureElement);
 
-//====================== FUNCTION VALIDATION ===================================
+//====================== FUNCTION VALIDATION ==================================
+
+enableValidation();
 
 //============================ FUNCTION =======================================
 
@@ -120,6 +122,12 @@ function initClosePopupByClickOnOverlay(popupElement) {
       closePopup(popupElement);
     }
   });
+}
+
+function initClosePopupByClickOnEsc(evt, popupElement) {
+  if (evt.key === 'Escape') {
+    closePopup(popupElement);
+  }
 }
 
 function closePopup(popupElement) {
@@ -220,31 +228,39 @@ function checkInputValidity(formElement, inputElement) {
   }
 }
 
-function formValidityHandler(formElement) {
-  const inputList = Array.from(formElement.querySelectorAll(".form__input"));
-  const submitButtonElement = formElement.querySelector(".form__submit");
-
-  toggleSubmitButtonState(inputList, submitButtonElement);
-
-  inputList.forEach((inputElement) => {
-    inputElement.addEventListener("input", () => {
-      checkInputValidity(formElement, inputElement);
-
-      toggleSubmitButtonState(inputList, submitButtonElement);
-    });
-  });
-}
-
 function hasInvalidInputs(inputList) {
   return inputList.some((inputElement) => {
     return !inputElement.validity.valid;
   });
 }
 
-function toggleSubmitButtonState(inputList, submitButtonElement) {
+function toggleButtonSubmitState(inputList, buttonSubmitElement) {
   if (hasInvalidInputs(inputList)) {
-    submitButtonElement.classList.add("form__submit_inactive");
+    buttonSubmitElement.classList.add("form__submit_inactive");
   } else {
-    submitButtonElement.classList.remove("form__submit_inactive");
+    buttonSubmitElement.classList.remove("form__submit_inactive");
   }
+}
+
+function formValidityHandler(formElement) {
+  const inputList = Array.from(formElement.querySelectorAll(".form__input"));
+  const buttonSubmitElement = formElement.querySelector(".form__submit");
+
+  toggleButtonSubmitState(inputList, buttonSubmitElement);
+
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener("input", () => {
+      checkInputValidity(formElement, inputElement);
+
+      toggleButtonSubmitState(inputList, buttonSubmitElement);
+    });
+  });
+}
+
+function enableValidation() {
+  const formList = Array.from(document.querySelectorAll(".form"));
+
+  formList.forEach((formElement) => {
+    formValidityHandler(formElement);
+  });
 }

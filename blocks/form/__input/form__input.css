@@ -1,4 +1,5 @@
-.form__item {
+.form__input {
+  width: 100%;
   min-height: 27px;
   padding: 1px 2px 10px 2px;
   box-sizing: border-box;
@@ -12,6 +13,6 @@
   line-height: 1.22;
 }
 
-.form__item:focus {
+.form__input:focus {
   border: 1px solid rgb(0, 191, 255);
 }

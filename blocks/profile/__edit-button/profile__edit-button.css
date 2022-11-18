@@ -2,26 +2,27 @@
   padding: 0;
   width: 24px;
   height: 24px;
+  position: absolute;
+  right: -42px;
+  bottom: 22%;
   border: 1px solid #fff;
   background-color: inherit;
   background-image: url(../../../images/icon/icon-edit.svg);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: 42%;
-  transition: opacity .5s ease-in;
+  transition: opacity 0.5s ease-in;
 }
 
 .profile__edit-button:hover {
   cursor: pointer;
-  opacity: .6;
+  opacity: 0.6;
 }
 
 @media screen and (max-width: 400px) {
   .profile__edit-button {
     width: 18px;
     height: 18px;
-    position: absolute;
     right: -28px;
-    bottom: 22%;
   }
 }

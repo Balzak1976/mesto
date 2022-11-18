@@ -4,11 +4,11 @@
   border: 0;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 33px;
 }
 
 @media screen and (max-width: 550px) {
   .form__container {
-    padding-top: 30px;
+    padding-top: 33px;
   }
 }

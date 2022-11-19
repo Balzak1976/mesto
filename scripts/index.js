@@ -21,21 +21,6 @@ const formUserOccupation = formProfileElement.querySelector(
   ".form__input_user_occupation"
 );
 
-// profile listener
-profileEditButton.addEventListener("click", () => {
-  initHideInputError(formProfileElement, selectors);
-  formProfileElement.reset();
-  fillProfilePopupFromProfile();
-  openPopup(popupProfileElement);
-
-  document.addEventListener("keydown", initClosePopupByClickOnEsc);
-  initClosePopupByClickOnOverlay(popupProfileElement);
-  popupProfileCloseButton.addEventListener("click", closePopup);
-});
-
-// profile form
-formProfileElement.addEventListener("submit", profileFormHandler);
-
 //============================ CARDS ==========================================
 
 const cardsContainer = document.querySelector(".cards__list");
@@ -43,27 +28,6 @@ const cardsContainer = document.querySelector(".cards__list");
 // render card
 initialCards.forEach((card) => {
   renderCard(card);
-});
-
-cardsContainer.addEventListener("click", function (evt) {
-  if (evt.target.classList.contains("card__del-button")) {
-    deleteCard(evt.target);
-    return;
-  }
-
-  if (evt.target.classList.contains("card__image")) {
-    currentCardOpenZoomPictureHandler(evt.target);
-
-    document.addEventListener("keydown", initClosePopupByClickOnEsc);
-    initClosePopupByClickOnOverlay(popupZoomPictureElement);
-    popupZoomPictureCloseButton.addEventListener("click", closePopup);
-    return;
-  }
-
-  if (evt.target.classList.contains("card__like-button")) {
-    toggleLikeButton(evt.target);
-    return;
-  }
 });
 
 // popup new card
@@ -78,19 +42,6 @@ const formCardName = formCardElement.querySelector(".form__input_card_name");
 const formCardImgLink = formCardElement.querySelector(
   ".form__input_card_img-link"
 );
-
-formCardElement.addEventListener("submit", cardFormHandler);
-
-// card listener
-profileAddButton.addEventListener("click", () => {
-  initHideInputError(formCardElement, selectors);
-  formCardElement.reset();
-  openPopup(popupCardElement);
-
-  document.addEventListener("keydown", initClosePopupByClickOnEsc);
-  initClosePopupByClickOnOverlay(popupCardElement);
-  popupCardCloseButton.addEventListener("click", closePopup);
-});
 
 //======================== POPUP ZOOM PICTURE ==================================
 
@@ -108,19 +59,19 @@ const zoomPictureCaption = zoomPictureElement.querySelector(
 
 //=========================== VALIDATION ======================================
 
-enableValidation(selectors);
+enableValidation(validationConfig);
 
 //============================ FUNCTION =======================================
 
-function initClosePopupByClickOnOverlay(popupElement) {
-  popupElement.addEventListener("click", (evt) => {
-    if (evt.target === evt.currentTarget) {
-      closePopup();
-    }
-  });
+function initClosePopupByClickOnOverlay(evt) {
+  if (evt.target === evt.currentTarget) {
+    closePopup();
+  }
+
+  // evt.target.removeEventListener("click", initClosePopupByClickOnOverlay);
 }
 
-function initClosePopupByClickOnEsc(evt) {
+function handleCloseByEsc(evt) {
   if (evt.key === "Escape") {
     closePopup();
   }
@@ -133,11 +84,13 @@ function closePopup() {
     popupOpened.classList.remove("popup_opened");
   }
 
-  document.removeEventListener("keydown", initClosePopupByClickOnEsc);
+  document.removeEventListener("keydown", handleCloseByEsc);
 }
 
 function openPopup(popupElement) {
   popupElement.classList.add("popup_opened");
+
+  document.addEventListener("keydown", handleCloseByEsc);
 }
 
 function fillProfilePopupFromProfile() {
@@ -145,13 +98,35 @@ function fillProfilePopupFromProfile() {
   formUserOccupation.value = profileUserOccupation.textContent.trim();
 }
 
-function profileFormHandler(evt) {
+function handleProfileFormSubmit(evt) {
   evt.preventDefault();
 
   profileUserName.textContent = formUserName.value;
   profileUserOccupation.textContent = formUserOccupation.value;
 
   closePopup(popupProfileElement);
+}
+
+function handelProfileEditButton() {
+  hideFormValidationErrors(formProfileElement, validationConfig);
+  fillProfilePopupFromProfile();
+  openPopup(popupProfileElement);
+}
+
+function handleProfileAddButton() {
+  hideFormValidationErrors(formCardElement, validationConfig);
+  formCardElement.reset();
+  openPopup(popupCardElement);
+}
+
+function setListersOnCard(cardElement) {
+  const buttonDelete = cardElement.querySelector('.card__del-button');
+  const buttonLike = cardElement.querySelector('.card__like-button');
+  const image = cardElement.querySelector('.card__image');
+
+  buttonDelete.addEventListener("click", () => deleteCard(buttonDelete));
+  buttonLike.addEventListener("click", () => toggleLikeButton(buttonLike));
+  image.addEventListener("click", () => handleOpenImagePopup(image));
 }
 
 function createCard(data) {
@@ -167,6 +142,9 @@ function createCard(data) {
   cardImage.alt = data.name;
   cardElement.querySelector(".card__title").textContent = data.name;
 
+  // устанавливаем обработчики на карточку
+  setListersOnCard(cardElement);
+
   return cardElement;
 }
 
@@ -181,7 +159,7 @@ function deleteCard(deleteCardButton) {
   deleteCardButton.closest(".card__item").remove();
 }
 
-function currentCardOpenZoomPictureHandler(img) {
+function handleOpenImagePopup(img) {
   const cardElement = img.closest(".card");
   openPopup(popupZoomPictureElement);
 
@@ -196,7 +174,7 @@ function toggleLikeButton(cardLikeButton) {
   cardLikeButton.classList.toggle("card__like-button_active");
 }
 
-function cardFormHandler(evt) {
+function handleCardFormSubmit(evt) {
   evt.preventDefault();
 
   const data = { name: formCardName.value, link: formCardImgLink.value };
@@ -205,10 +183,40 @@ function cardFormHandler(evt) {
   renderCard(data);
 }
 
-function initHideInputError(formElement, {inputSelector, ...selectors}) {
+function hideFormValidationErrors(
+  formElement,
+  { inputSelector, ...validationConfig }
+) {
   const inputList = formElement.querySelectorAll(inputSelector);
 
   inputList.forEach((inputElement) => {
-    hideInputError(formElement, inputElement, selectors);
+    hideInputError(formElement, inputElement, validationConfig);
   });
 }
+
+//========================= PROFILE LISTENER ===================================
+
+profileEditButton.addEventListener("click", handelProfileEditButton);
+
+popupProfileCloseButton.addEventListener("click", closePopup);
+popupProfileElement.addEventListener("click", initClosePopupByClickOnOverlay);
+
+// profile form
+formProfileElement.addEventListener("submit", handleProfileFormSubmit);
+
+//=========================== CARDS LISTENER ===================================
+
+formCardElement.addEventListener("submit", handleCardFormSubmit);
+
+profileAddButton.addEventListener("click", handleProfileAddButton);
+
+popupCardCloseButton.addEventListener("click", closePopup);
+popupCardElement.addEventListener("click", initClosePopupByClickOnOverlay);
+
+//======================== ZOOM PICTURE LISTENER ===============================
+
+popupZoomPictureCloseButton.addEventListener("click", closePopup);
+popupZoomPictureElement.addEventListener(
+  "click",
+  initClosePopupByClickOnOverlay
+);

@@ -1,4 +1,4 @@
-const selectors = {
+const validationConfig = {
   formSelector: ".form",
   inputSelector: ".form__input",
   submitButtonSelector: ".form__submit",
@@ -62,12 +62,14 @@ function toggleButtonSubmitState(
 ) {
   if (hasInvalidInputs(inputList)) {
     buttonSubmitElement.classList.add(inactiveButtonClass);
+    buttonSubmitElement.setAttribute("disabled", "disabled");
   } else {
     buttonSubmitElement.classList.remove(inactiveButtonClass);
+    buttonSubmitElement.removeAttribute("disabled");
   }
 }
 
-function formValidityHandler(
+function setEventListeners(
   formElement,
   { inputSelector, submitButtonSelector, ...rest }
 ) {
@@ -90,6 +92,6 @@ function enableValidation({ formSelector, ...rest }) {
   const formList = document.querySelectorAll(formSelector);
 
   formList.forEach((formElement) => {
-    formValidityHandler(formElement, rest);
+    setEventListeners(formElement, rest);
   });
 }

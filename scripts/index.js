@@ -45,6 +45,7 @@ const formCardName = formCardElement.querySelector(".form__input_card_name");
 const formCardImgLink = formCardElement.querySelector(
   ".form__input_card_img-link"
 );
+const buttonSubmitElement = formCardElement.querySelector(".form__submit");
 
 //======================== POPUP ZOOM PICTURE ==================================
 
@@ -175,7 +176,6 @@ function handleCardFormSubmit(evt) {
   evt.preventDefault();
 
   const data = { name: formCardName.value, link: formCardImgLink.value };
-  const buttonSubmitElement = evt.target.querySelector(".form__submit");
 
   setInactiveButtonState(buttonSubmitElement, validationConfig);
 

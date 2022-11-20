@@ -55,18 +55,22 @@ function hasInvalidInputs(inputList) {
   });
 }
 
-function toggleButtonSubmitState(
-  inputList,
-  buttonSubmitElement,
-  { inactiveButtonClass }
-) {
+function toggleButtonSubmitState(inputList, buttonSubmitElement, rest) {
   if (hasInvalidInputs(inputList)) {
-    buttonSubmitElement.classList.add(inactiveButtonClass);
-    buttonSubmitElement.setAttribute("disabled", "disabled");
+    setInactiveButtonState(buttonSubmitElement, rest);
   } else {
-    buttonSubmitElement.classList.remove(inactiveButtonClass);
-    buttonSubmitElement.removeAttribute("disabled");
+    setActiveButtonState(buttonSubmitElement, rest);
   }
+}
+
+function setInactiveButtonState(buttonElement, { inactiveButtonClass }) {
+  buttonElement.classList.add(inactiveButtonClass);
+  buttonElement.disabled = true;
+}
+
+function setActiveButtonState(buttonElement, { inactiveButtonClass }) {
+  buttonElement.classList.remove(inactiveButtonClass);
+  buttonElement.disabled = false;
 }
 
 function setEventListeners(

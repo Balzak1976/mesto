@@ -24,6 +24,9 @@ const formUserOccupation = formProfileElement.querySelector(
 //============================ CARDS ==========================================
 
 const cardsContainer = document.querySelector(".cards__list");
+const cardTemplate = document
+  .querySelector(".card-template")
+  .content.querySelector(".card__item");
 
 // render card
 initialCards.forEach((card) => {
@@ -63,7 +66,7 @@ enableValidation(validationConfig);
 
 //============================ FUNCTION =======================================
 
-function initClosePopupByClickOnOverlay(evt) {
+function handleCloseByOverlayClick(evt) {
   if (evt.target === evt.currentTarget) {
     closePopup();
   }
@@ -105,22 +108,22 @@ function handleProfileFormSubmit(evt) {
   closePopup(popupProfileElement);
 }
 
-function handelProfileEditButton() {
+function handleProfileEditButtonClick() {
   hideFormValidationErrors(formProfileElement, validationConfig);
   fillProfilePopupFromProfile();
   openPopup(popupProfileElement);
 }
 
-function handleProfileAddButton() {
+function handleProfileAddButtonClick() {
   hideFormValidationErrors(formCardElement, validationConfig);
   formCardElement.reset();
   openPopup(popupCardElement);
 }
 
-function setListersOnCard(cardElement) {
-  const buttonDelete = cardElement.querySelector('.card__del-button');
-  const buttonLike = cardElement.querySelector('.card__like-button');
-  const image = cardElement.querySelector('.card__image');
+function setListenersOnCard(cardElement) {
+  const buttonDelete = cardElement.querySelector(".card__del-button");
+  const buttonLike = cardElement.querySelector(".card__like-button");
+  const image = cardElement.querySelector(".card__image");
 
   buttonDelete.addEventListener("click", () => deleteCard(buttonDelete));
   buttonLike.addEventListener("click", () => toggleLikeButton(buttonLike));
@@ -128,11 +131,7 @@ function setListersOnCard(cardElement) {
 }
 
 function createCard(data) {
-  // клонируем содержимое тега template
-  const cardElement = document
-    .querySelector(".card-template")
-    .content.querySelector(".card__item")
-    .cloneNode(true);
+  const cardElement = cardTemplate.cloneNode(true);
   const cardImage = cardElement.querySelector(".card__image");
 
   // наполняем содержимым
@@ -141,7 +140,7 @@ function createCard(data) {
   cardElement.querySelector(".card__title").textContent = data.name;
 
   // устанавливаем обработчики на карточку
-  setListersOnCard(cardElement);
+  setListenersOnCard(cardElement);
 
   return cardElement;
 }
@@ -176,6 +175,9 @@ function handleCardFormSubmit(evt) {
   evt.preventDefault();
 
   const data = { name: formCardName.value, link: formCardImgLink.value };
+  const buttonSubmitElement = evt.target.querySelector(".form__submit");
+
+  setInactiveButtonState(buttonSubmitElement, validationConfig);
 
   closePopup(popupCardElement);
   renderCard(data);
@@ -194,27 +196,23 @@ function hideFormValidationErrors(
 
 //========================= PROFILE LISTENER ===================================
 
-profileEditButton.addEventListener("click", handelProfileEditButton);
+profileEditButton.addEventListener("click", handleProfileEditButtonClick);
 
 popupProfileCloseButton.addEventListener("click", closePopup);
-popupProfileElement.addEventListener("click", initClosePopupByClickOnOverlay);
+popupProfileElement.addEventListener("click", handleCloseByOverlayClick);
 
-// profile form
 formProfileElement.addEventListener("submit", handleProfileFormSubmit);
 
 //=========================== CARDS LISTENER ===================================
 
-formCardElement.addEventListener("submit", handleCardFormSubmit);
-
-profileAddButton.addEventListener("click", handleProfileAddButton);
+profileAddButton.addEventListener("click", handleProfileAddButtonClick);
 
 popupCardCloseButton.addEventListener("click", closePopup);
-popupCardElement.addEventListener("click", initClosePopupByClickOnOverlay);
+popupCardElement.addEventListener("click", handleCloseByOverlayClick);
+
+formCardElement.addEventListener("submit", handleCardFormSubmit);
 
 //======================== ZOOM PICTURE LISTENER ===============================
 
 popupZoomPictureCloseButton.addEventListener("click", closePopup);
-popupZoomPictureElement.addEventListener(
-  "click",
-  initClosePopupByClickOnOverlay
-);
+popupZoomPictureElement.addEventListener("click", handleCloseByOverlayClick);

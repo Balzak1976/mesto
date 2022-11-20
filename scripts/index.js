@@ -67,8 +67,6 @@ function initClosePopupByClickOnOverlay(evt) {
   if (evt.target === evt.currentTarget) {
     closePopup();
   }
-
-  // evt.target.removeEventListener("click", initClosePopupByClickOnOverlay);
 }
 
 function handleCloseByEsc(evt) {

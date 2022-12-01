@@ -1,11 +1,12 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 45px;
+  /* gap: 45px; */
+  gap: 15px;
 }
 
 @media screen and (max-width: 550px) {
   .form {
-    gap: 40px;
+    gap: 10px;
   }
 }

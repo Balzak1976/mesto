@@ -1,99 +1,43 @@
-//============================ PROFILE =======================================
+import dataCards from "./data-cards.js";
+import Card from "./Сard.js";
 
-const profileElement = document.querySelector(".profile");
-const profileUserName = profileElement.querySelector(".profile__user-name");
-const profileUserOccupation = profileElement.querySelector(
-  ".profile__user-occupation"
-);
-const profileEditButton = profileElement.querySelector(".profile__edit-button");
-const profileAddButton = profileElement.querySelector(".profile__add-button");
+import { handleCloseByOverlayClick, closePopup, openPopup } from "./utils.js";
 
-// popup-profile
-const popupProfileElement = document.querySelector(".popup_type_profile");
-const popupProfileCloseButton = popupProfileElement.querySelector(
-  ".popup__close_type_profile"
-);
+import {
+  // profile
+  profileUserName,
+  profileUserOccupation,
+  profileEditButton,
+  profileAddButton,
+  popupProfileCloseButton,
+  formUserName,
+  formUserOccupation,
+  popupProfileElement,
+  formProfileElement,
+  // card
+  cardsContainer,
+  popupCardElement,
+  popupCardCloseButton,
+  formCardElement,
+  formCardName,
+  formCardImgLink,
+  buttonSubmitElement,
+  // zoom picture
+  popupZoomPictureElement,
+  zoomPictureImg,
+  zoomPictureCaption,
+  popupZoomPictureCloseButton,
+} from "./const.js";
 
-// form-profile
-const formProfileElement = document.querySelector(".form_type_profile");
-const formUserName = formProfileElement.querySelector(".form__input_user_name");
-const formUserOccupation = formProfileElement.querySelector(
-  ".form__input_user_occupation"
-);
+//========================== RENDER CARDS ======================================
 
-//============================ CARDS ==========================================
-
-const cardsContainer = document.querySelector(".cards__list");
-const cardTemplate = document
-  .querySelector(".card-template")
-  .content.querySelector(".card__item");
-
-// render card
-initialCards.forEach((card) => {
-  renderCard(card);
-});
-
-// popup new card
-const popupCardElement = document.querySelector(".popup_type_card");
-const popupCardCloseButton = popupCardElement.querySelector(
-  ".popup__close_type_card"
-);
-
-// new card form
-const formCardElement = document.querySelector(".form_type_card");
-const formCardName = formCardElement.querySelector(".form__input_card_name");
-const formCardImgLink = formCardElement.querySelector(
-  ".form__input_card_img-link"
-);
-const buttonSubmitElement = formCardElement.querySelector(".form__submit");
-
-//======================== POPUP ZOOM PICTURE ==================================
-
-const popupZoomPictureElement = document.querySelector(
-  ".popup_type_zoom-picture"
-);
-const popupZoomPictureCloseButton = popupZoomPictureElement.querySelector(
-  ".popup__close_type_zoom-picture"
-);
-const zoomPictureElement = document.querySelector(".zoom-picture");
-const zoomPictureImg = zoomPictureElement.querySelector(".zoom-picture__image");
-const zoomPictureCaption = zoomPictureElement.querySelector(
-  ".zoom-picture__caption"
-);
+dataCards.forEach((data) => renderCard(data, handleOpenImagePopup));
 
 //=========================== VALIDATION ======================================
 
 enableValidation(validationConfig);
 
 //============================ FUNCTION =======================================
-
-function handleCloseByOverlayClick(evt) {
-  if (evt.target === evt.currentTarget) {
-    closePopup();
-  }
-}
-
-function handleCloseByEsc(evt) {
-  if (evt.key === "Escape") {
-    closePopup();
-  }
-}
-
-function closePopup() {
-  const popupOpened = document.querySelector(".popup_opened");
-
-  if (popupOpened) {
-    popupOpened.classList.remove("popup_opened");
-  }
-
-  document.removeEventListener("keydown", handleCloseByEsc);
-}
-
-function openPopup(popupElement) {
-  popupElement.classList.add("popup_opened");
-
-  document.addEventListener("keydown", handleCloseByEsc);
-}
 
 function fillProfilePopupFromProfile() {
   formUserName.value = profileUserName.textContent.trim();
@@ -121,55 +65,16 @@ function handleProfileAddButtonClick() {
   openPopup(popupCardElement);
 }
 
-function setListenersOnCard(cardElement) {
-  const buttonDelete = cardElement.querySelector(".card__del-button");
-  const buttonLike = cardElement.querySelector(".card__like-button");
-  const image = cardElement.querySelector(".card__image");
-
-  buttonDelete.addEventListener("click", () => deleteCard(buttonDelete));
-  buttonLike.addEventListener("click", () => toggleLikeButton(buttonLike));
-  image.addEventListener("click", () => handleOpenImagePopup(image));
+function renderCard(...args) {
+  cardsContainer.prepend(new Card(...args).createCard());
 }
 
-function createCard(data) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardImage = cardElement.querySelector(".card__image");
-
-  // наполняем содержимым
-  cardImage.src = data.link;
-  cardImage.alt = data.name;
-  cardElement.querySelector(".card__title").textContent = data.name;
-
-  // устанавливаем обработчики на карточку
-  setListenersOnCard(cardElement);
-
-  return cardElement;
-}
-
-function renderCard(data) {
-  // Создаем карточку на основе данных
-  const cardElement = createCard(data);
-  // Помещаем ее в контейнер карточек
-  cardsContainer.prepend(cardElement);
-}
-
-function deleteCard(deleteCardButton) {
-  deleteCardButton.closest(".card__item").remove();
-}
-
-function handleOpenImagePopup(img) {
-  const cardElement = img.closest(".card");
+function handleOpenImagePopup() {
   openPopup(popupZoomPictureElement);
 
-  zoomPictureImg.src = img.src;
-  zoomPictureImg.alt = img.alt;
-
-  zoomPictureCaption.textContent =
-    cardElement.querySelector(".card__title").textContent;
-}
-
-function toggleLikeButton(cardLikeButton) {
-  cardLikeButton.classList.toggle("card__like-button_active");
+  zoomPictureImg.src = this._linkImage;
+  zoomPictureImg.alt = this._nameImage;
+  zoomPictureCaption.textContent = this._nameImage;
 }
 
 function handleCardFormSubmit(evt) {
@@ -180,7 +85,7 @@ function handleCardFormSubmit(evt) {
   setInactiveButtonState(buttonSubmitElement, validationConfig);
 
   closePopup(popupCardElement);
-  renderCard(data);
+  renderCard(data, handleOpenImagePopup);
 }
 
 function hideFormValidationErrors(

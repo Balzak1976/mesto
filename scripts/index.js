@@ -1,5 +1,6 @@
 import dataCards from "./data-cards.js";
 import Card from "./Сard.js";
+import FormValidator from "./FormValidator.js";
 
 import { handleCloseByOverlayClick, closePopup, openPopup } from "./utils.js";
 
@@ -35,9 +36,23 @@ dataCards.forEach((data) => renderCard(data, handleOpenImagePopup));
 
 //=========================== VALIDATION ======================================
 
-enableValidation(validationConfig);
+realizeValidation(validationConfig);
 
 //============================ FUNCTION =======================================
+
+function realizeValidation({ formSelector, ...rest }) {
+  const formList = document.querySelectorAll(formSelector);
+
+  formList.forEach((formElement) => {
+    new FormValidator(
+      rest,
+      formElement,
+      setInactiveButtonState,
+      setActiveButtonState,
+      hideInputError
+    ).enableValidation();
+  });
+}
 
 function fillProfilePopupFromProfile() {
   formUserName.value = profileUserName.textContent.trim();

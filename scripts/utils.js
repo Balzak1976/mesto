@@ -1,3 +1,7 @@
+import { popupList } from "./const.js";
+
+//==============================================================================
+
 function handleCloseByOverlayClick(evt) {
   if (evt.target === evt.currentTarget) {
     closePopup();
@@ -11,11 +15,11 @@ function handleCloseByEsc(evt) {
 }
 
 function closePopup() {
-  const popupOpened = document.querySelector(".popup_opened");
-
-  if (popupOpened) {
-    popupOpened.classList.remove("popup_opened");
-  }
+  popupList.forEach((popupElement) => {
+    if (popupElement) {
+      popupElement.classList.remove("popup_opened");
+    }
+  });
 
   document.removeEventListener("keydown", handleCloseByEsc);
 }
@@ -26,10 +30,6 @@ function openPopup(popupElement) {
   document.addEventListener("keydown", handleCloseByEsc);
 }
 
+//==============================================================================
 
-
-export {
-  handleCloseByOverlayClick,
-  closePopup,
-  openPopup,
-}
+export { handleCloseByOverlayClick, closePopup, openPopup };

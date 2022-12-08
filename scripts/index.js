@@ -11,10 +11,10 @@ import {
   profileEditButton,
   profileAddButton,
   popupProfileCloseButton,
+  formProfileElement,
   formUserName,
   formUserOccupation,
   popupProfileElement,
-  formProfileElement,
   // card
   cardsContainer,
   popupCardElement,
@@ -22,12 +22,16 @@ import {
   formCardElement,
   formCardName,
   formCardImgLink,
-  buttonSubmitElement,
+  buttonCardSubmitElement,
   // zoom picture
   popupZoomPictureElement,
   zoomPictureImg,
   zoomPictureCaption,
   popupZoomPictureCloseButton,
+  // validation
+  validationConfig,
+  profileFormValidator,
+  cardFormValidator,
 } from "./const.js";
 
 //========================== RENDER CARDS ======================================
@@ -36,21 +40,15 @@ dataCards.forEach((data) => renderCard(data, handleOpenImagePopup));
 
 //=========================== VALIDATION ======================================
 
-realizeValidation(validationConfig);
+realizeValidation();
 
 //============================ FUNCTION =======================================
 
-function realizeValidation({ formSelector, ...rest }) {
-  const formList = document.querySelectorAll(formSelector);
+function realizeValidation() {
+  const formList = document.querySelectorAll(".form");
 
   formList.forEach((formElement) => {
-    new FormValidator(
-      rest,
-      formElement,
-      setInactiveButtonState,
-      setActiveButtonState,
-      hideInputError
-    ).enableValidation();
+    new FormValidator(validationConfig, formElement).enableValidation();
   });
 }
 
@@ -65,17 +63,19 @@ function handleProfileFormSubmit(evt) {
   profileUserName.textContent = formUserName.value;
   profileUserOccupation.textContent = formUserOccupation.value;
 
-  closePopup(popupProfileElement);
+  closePopup();
 }
 
 function handleProfileEditButtonClick() {
-  hideFormValidationErrors(formProfileElement, validationConfig);
+  // скрываем старые сообщения ошибок валидации
+  profileFormValidator.hideFormValidationErrors();
   fillProfilePopupFromProfile();
   openPopup(popupProfileElement);
 }
 
 function handleProfileAddButtonClick() {
-  hideFormValidationErrors(formCardElement, validationConfig);
+  // скрываем старые сообщения ошибок валидации
+  cardFormValidator.hideFormValidationErrors();
   formCardElement.reset();
   openPopup(popupCardElement);
 }
@@ -97,21 +97,11 @@ function handleCardFormSubmit(evt) {
 
   const data = { name: formCardName.value, link: formCardImgLink.value };
 
-  setInactiveButtonState(buttonSubmitElement, validationConfig);
+  // блокируем кнопку при повторном открытии формы, чтобы не создать пустую карточку
+  cardFormValidator.setInactiveButtonState(buttonCardSubmitElement);
 
-  closePopup(popupCardElement);
+  closePopup();
   renderCard(data, handleOpenImagePopup);
-}
-
-function hideFormValidationErrors(
-  formElement,
-  { inputSelector, ...validationConfig }
-) {
-  const inputList = formElement.querySelectorAll(inputSelector);
-
-  inputList.forEach((inputElement) => {
-    hideInputError(formElement, inputElement, validationConfig);
-  });
 }
 
 //========================= PROFILE LISTENER ===================================

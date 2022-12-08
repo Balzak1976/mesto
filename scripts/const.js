@@ -1,3 +1,6 @@
+import FormValidator from "./FormValidator.js";
+
+const popupList = document.querySelectorAll(".popup");
 //============================ PROFILE =======================================
 
 const profileElement = document.querySelector(".profile");
@@ -37,7 +40,7 @@ const formCardName = formCardElement.querySelector(".form__input_card_name");
 const formCardImgLink = formCardElement.querySelector(
   ".form__input_card_img-link"
 );
-const buttonSubmitElement = formCardElement.querySelector(".form__submit");
+const buttonCardSubmitElement = formCardElement.querySelector(".form__submit");
 
 //======================== POPUP ZOOM PICTURE ==================================
 
@@ -53,17 +56,36 @@ const zoomPictureCaption = zoomPictureElement.querySelector(
   ".zoom-picture__caption"
 );
 
+//================================ VALIDATION ==================================
+
+const validationConfig = {
+  inputSelector: ".form__input",
+  submitButtonSelector: ".form__submit",
+  inactiveButtonClass: "form__submit_inactive",
+  inputErrorClass: "form__input_type_error",
+  errorClass: "form__input-error_active",
+};
+
+const profileFormValidator = new FormValidator(
+  validationConfig,
+  formProfileElement
+);
+const cardFormValidator = new FormValidator(validationConfig, formCardElement);
+
+//==============================================================================
+
 export {
+  popupList,
   // profile
   profileUserName,
   profileUserOccupation,
   profileEditButton,
   profileAddButton,
   popupProfileCloseButton,
+  formProfileElement,
   formUserName,
   formUserOccupation,
   popupProfileElement,
-  formProfileElement,
   // card
   cardsContainer,
   popupCardElement,
@@ -71,10 +93,14 @@ export {
   formCardElement,
   formCardName,
   formCardImgLink,
-  buttonSubmitElement,
+  buttonCardSubmitElement,
   // zoom picture
   popupZoomPictureElement,
   popupZoomPictureCloseButton,
   zoomPictureImg,
   zoomPictureCaption,
+  // validation
+  validationConfig,
+  profileFormValidator,
+  cardFormValidator,
 };

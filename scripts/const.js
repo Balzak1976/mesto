@@ -40,7 +40,6 @@ const formCardName = formCardElement.querySelector(".form__input_card_name");
 const formCardImgLink = formCardElement.querySelector(
   ".form__input_card_img-link"
 );
-const buttonCardSubmitElement = formCardElement.querySelector(".form__submit");
 
 //======================== POPUP ZOOM PICTURE ==================================
 
@@ -93,14 +92,12 @@ export {
   formCardElement,
   formCardName,
   formCardImgLink,
-  buttonCardSubmitElement,
   // zoom picture
   popupZoomPictureElement,
   popupZoomPictureCloseButton,
   zoomPictureImg,
   zoomPictureCaption,
   // validation
-  validationConfig,
   profileFormValidator,
   cardFormValidator,
 };

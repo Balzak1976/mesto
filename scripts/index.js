@@ -1,6 +1,5 @@
 import dataCards from "./data-cards.js";
 import Card from "./Сard.js";
-import FormValidator from "./FormValidator.js";
 
 import { handleCloseByOverlayClick, closePopup, openPopup } from "./utils.js";
 
@@ -22,14 +21,12 @@ import {
   formCardElement,
   formCardName,
   formCardImgLink,
-  buttonCardSubmitElement,
   // zoom picture
   popupZoomPictureElement,
   zoomPictureImg,
   zoomPictureCaption,
   popupZoomPictureCloseButton,
   // validation
-  validationConfig,
   profileFormValidator,
   cardFormValidator,
 } from "./const.js";
@@ -40,17 +37,10 @@ dataCards.forEach((data) => renderCard(data, handleOpenImagePopup));
 
 //=========================== VALIDATION ======================================
 
-realizeValidation();
+profileFormValidator.enableValidation();
+cardFormValidator.enableValidation();
 
 //============================ FUNCTION =======================================
-
-function realizeValidation() {
-  const formList = document.querySelectorAll(".form");
-
-  formList.forEach((formElement) => {
-    new FormValidator(validationConfig, formElement).enableValidation();
-  });
-}
 
 function fillProfilePopupFromProfile() {
   formUserName.value = profileUserName.textContent.trim();
@@ -98,7 +88,7 @@ function handleCardFormSubmit(evt) {
   const data = { name: formCardName.value, link: formCardImgLink.value };
 
   // блокируем кнопку при повторном открытии формы, чтобы не создать пустую карточку
-  cardFormValidator.setInactiveButtonState(buttonCardSubmitElement);
+  cardFormValidator.setInactiveButtonState();
 
   closePopup();
   renderCard(data, handleOpenImagePopup);

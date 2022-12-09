@@ -14,18 +14,14 @@ export default class FormValidator {
   }
 
   hideFormValidationErrors() {
-    const inputList = [
-      ...this._formElement.querySelectorAll(this._inputSelector),
-    ];
-
-    inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       this._hideInputError(inputElement);
     });
   }
 
-  setInactiveButtonState(buttonElement) {
-    buttonElement.classList.add(this._inactiveButtonClass);
-    buttonElement.disabled = true;
+  setInactiveButtonState() {
+    this._buttonSubmitElement.classList.add(this._inactiveButtonClass);
+    this._buttonSubmitElement.disabled = true;
   }
 
   // ============================= INNER METHOD ================================
@@ -81,7 +77,7 @@ export default class FormValidator {
 
   _toggleButtonSubmitState() {
     if (this._hasInvalidInputs()) {
-      this.setInactiveButtonState(this._buttonSubmitElement);
+      this.setInactiveButtonState();
     } else {
       this._setActiveButtonState();
     }

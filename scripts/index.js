@@ -53,7 +53,7 @@ function handleProfileFormSubmit(evt) {
   profileUserName.textContent = formUserName.value;
   profileUserOccupation.textContent = formUserOccupation.value;
 
-  closePopup();
+  closePopup(popupProfileElement);
 }
 
 function handleProfileEditButtonClick() {
@@ -90,7 +90,7 @@ function handleCardFormSubmit(evt) {
   // блокируем кнопку при повторном открытии формы, чтобы не создать пустую карточку
   cardFormValidator.setInactiveButtonState();
 
-  closePopup();
+  closePopup(popupCardElement);
   renderCard(data, handleOpenImagePopup);
 }
 
@@ -98,7 +98,9 @@ function handleCardFormSubmit(evt) {
 
 profileEditButton.addEventListener("click", handleProfileEditButtonClick);
 
-popupProfileCloseButton.addEventListener("click", closePopup);
+popupProfileCloseButton.addEventListener("click", () =>
+  closePopup(popupProfileElement)
+);
 popupProfileElement.addEventListener("click", handleCloseByOverlayClick);
 
 formProfileElement.addEventListener("submit", handleProfileFormSubmit);
@@ -107,12 +109,16 @@ formProfileElement.addEventListener("submit", handleProfileFormSubmit);
 
 profileAddButton.addEventListener("click", handleProfileAddButtonClick);
 
-popupCardCloseButton.addEventListener("click", closePopup);
+popupCardCloseButton.addEventListener("click", () =>
+  closePopup(popupCardElement)
+);
 popupCardElement.addEventListener("click", handleCloseByOverlayClick);
 
 formCardElement.addEventListener("submit", handleCardFormSubmit);
 
 //======================== ZOOM PICTURE LISTENER ===============================
 
-popupZoomPictureCloseButton.addEventListener("click", closePopup);
+popupZoomPictureCloseButton.addEventListener("click", (evt) =>
+  closePopup(popupZoomPictureElement)
+);
 popupZoomPictureElement.addEventListener("click", handleCloseByOverlayClick);

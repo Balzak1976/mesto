@@ -1,33 +1,27 @@
-import { popupList } from "./const.js";
-
-//==============================================================================
 
 function handleCloseByOverlayClick(evt) {
   if (evt.target === evt.currentTarget) {
-    closePopup();
+    closePopup(evt.target);
   }
 }
 
-function handleCloseByEsc(evt) {
+function handleCloseByEsc(evt, popupElement) {
   if (evt.key === "Escape") {
-    closePopup();
+    closePopup(popupElement);
   }
 }
 
-function closePopup() {
-  popupList.forEach((popupElement) => {
-    if (popupElement) {
-      popupElement.classList.remove("popup_opened");
-    }
-  });
-
+function closePopup(popupElement) {
+  popupElement.classList.remove("popup_opened");
   document.removeEventListener("keydown", handleCloseByEsc);
 }
 
 function openPopup(popupElement) {
   popupElement.classList.add("popup_opened");
 
-  document.addEventListener("keydown", handleCloseByEsc);
+  document.addEventListener("keydown", (evt) =>
+    handleCloseByEsc(evt, popupElement)
+  );
 }
 
 //==============================================================================

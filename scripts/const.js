@@ -1,6 +1,5 @@
 import FormValidator from "./FormValidator.js";
 
-const popupList = document.querySelectorAll(".popup");
 //============================ PROFILE =======================================
 
 const profileElement = document.querySelector(".profile");
@@ -74,7 +73,6 @@ const cardFormValidator = new FormValidator(validationConfig, formCardElement);
 //==============================================================================
 
 export {
-  popupList,
   // profile
   profileUserName,
   profileUserOccupation,

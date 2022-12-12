@@ -1,12 +1,12 @@
-
 function handleCloseByOverlayClick(evt) {
   if (evt.target === evt.currentTarget) {
     closePopup(evt.target);
   }
 }
 
-function handleCloseByEsc(evt, popupElement) {
+function handleCloseByEsc(evt) {
   if (evt.key === "Escape") {
+    const popupElement = document.querySelector('.popup_opened');
     closePopup(popupElement);
   }
 }
@@ -19,9 +19,7 @@ function closePopup(popupElement) {
 function openPopup(popupElement) {
   popupElement.classList.add("popup_opened");
 
-  document.addEventListener("keydown", (evt) =>
-    handleCloseByEsc(evt, popupElement)
-  );
+  document.addEventListener("keydown", handleCloseByEsc);
 }
 
 //==============================================================================

@@ -1,7 +1,12 @@
-import {dataCards} from "../utils/settings.js";
+import { dataCards } from "../utils/settings.js";
 import Card from "../components/Сard.js";
+import Section from "../components/Section.js";
 
-import { handleCloseByOverlayClick, closePopup, openPopup } from "../utils/utils.js";
+import {
+  handleCloseByOverlayClick,
+  closePopup,
+  openPopup,
+} from "../utils/utils.js";
 
 import {
   // profile
@@ -16,6 +21,7 @@ import {
   popupProfileElement,
   // card
   cardsContainer,
+  cardsContainerSelector,
   popupCardElement,
   popupCardCloseButton,
   formCardElement,
@@ -33,7 +39,21 @@ import {
 
 //========================== RENDER CARDS ======================================
 
-dataCards.forEach((data) => renderCard(data, handleOpenImagePopup));
+const cardsList = new Section(
+  {
+    items: dataCards,
+    renderer: (item) => {
+      const card = new Card(item, handleOpenImagePopup);
+
+      const cardElement = card.createCard();
+
+      cardsList.addItem(cardElement);
+    },
+  },
+  cardsContainerSelector
+);
+
+cardsList.renderItems();
 
 //=========================== VALIDATION ======================================
 

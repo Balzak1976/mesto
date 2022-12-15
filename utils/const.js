@@ -27,6 +27,7 @@ const formUserOccupation = formProfileElement.querySelector(
 //============================ CARDS ==========================================
 
 const cardsContainer = document.querySelector(".cards__list");
+const cardsContainerSelector = ".cards__list";
 
 // popup new card
 const popupCardElement = document.querySelector(".popup_type_card");
@@ -65,6 +66,7 @@ const cardFormValidator = new FormValidator(validationConfig, formCardElement);
 
 //==============================================================================
 
+
 export {
   // profile
   profileUserName,
@@ -78,6 +80,7 @@ export {
   popupProfileElement,
   // card
   cardsContainer,
+  cardsContainerSelector,
   popupCardElement,
   popupCardCloseButton,
   formCardElement,

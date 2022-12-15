@@ -1,7 +1,7 @@
-import dataCards from "./data-cards.js";
-import Card from "./Сard.js";
+import {dataCards} from "../utils/settings.js";
+import Card from "../components/Сard.js";
 
-import { handleCloseByOverlayClick, closePopup, openPopup } from "./utils.js";
+import { handleCloseByOverlayClick, closePopup, openPopup } from "../utils/utils.js";
 
 import {
   // profile
@@ -29,7 +29,7 @@ import {
   // validation
   profileFormValidator,
   cardFormValidator,
-} from "./const.js";
+} from "../utils/const.js";
 
 //========================== RENDER CARDS ======================================
 

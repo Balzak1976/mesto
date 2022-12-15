@@ -1,4 +1,5 @@
-import FormValidator from "./FormValidator.js";
+import FormValidator from "../components/FormValidator.js";
+import { validationConfig } from "./settings.js";
 
 //============================ PROFILE =======================================
 
@@ -55,14 +56,6 @@ const zoomPictureCaption = zoomPictureElement.querySelector(
 );
 
 //================================ VALIDATION ==================================
-
-const validationConfig = {
-  inputSelector: ".form__input",
-  submitButtonSelector: ".form__submit",
-  inactiveButtonClass: "form__submit_inactive",
-  inputErrorClass: "form__input_type_error",
-  errorClass: "form__input-error_active",
-};
 
 const profileFormValidator = new FormValidator(
   validationConfig,

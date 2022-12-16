@@ -3,95 +3,75 @@ import { validationConfig } from "./settings.js";
 
 //============================ PROFILE =======================================
 
-const profileElement = document.querySelector(".profile");
-const profileUserName = profileElement.querySelector(".profile__user-name");
-const profileUserOccupation = profileElement.querySelector(
+export const profileElement = document.querySelector(".profile");
+export const profileUserName = profileElement.querySelector(
+  ".profile__user-name"
+);
+export const profileUserOccupation = profileElement.querySelector(
   ".profile__user-occupation"
 );
-const profileEditButton = profileElement.querySelector(".profile__edit-button");
-const profileAddButton = profileElement.querySelector(".profile__add-button");
+export const profileEditButton = profileElement.querySelector(
+  ".profile__edit-button"
+);
+export const profileAddButton = profileElement.querySelector(
+  ".profile__add-button"
+);
 
 // popup-profile
-const popupProfileElement = document.querySelector(".popup_type_profile");
-const popupProfileCloseButton = popupProfileElement.querySelector(
-  ".popup__close_type_profile"
+export const popupProfileElement = document.querySelector(
+  ".popup_type_profile"
 );
 
 // form-profile
-const formProfileElement = document.querySelector(".form_type_profile");
-const formUserName = formProfileElement.querySelector(".form__input_user_name");
-const formUserOccupation = formProfileElement.querySelector(
+export const formProfileElement = document.querySelector(".form_type_profile");
+export const formUserName = formProfileElement.querySelector(
+  ".form__input_user_name"
+);
+export const formUserOccupation = formProfileElement.querySelector(
   ".form__input_user_occupation"
 );
 
 //============================ CARDS ==========================================
 
-const cardsContainer = document.querySelector(".cards__list");
-const cardsContainerSelector = ".cards__list";
+export const cardsContainer = document.querySelector(".cards__list");
+export const cardsContainerSelector = ".cards__list";
 
 // popup new card
-const popupCardElement = document.querySelector(".popup_type_card");
-const popupCardCloseButton = popupCardElement.querySelector(
-  ".popup__close_type_card"
-);
+export const popupCardElement = document.querySelector(".popup_type_card");
 
 // new card form
-const formCardElement = document.querySelector(".form_type_card");
-const formCardName = formCardElement.querySelector(".form__input_card_name");
-const formCardImgLink = formCardElement.querySelector(
+export const formCardElement = document.querySelector(".form_type_card");
+export const formCardName = formCardElement.querySelector(
+  ".form__input_card_name"
+);
+export const formCardImgLink = formCardElement.querySelector(
   ".form__input_card_img-link"
 );
 
 //======================== POPUP ZOOM PICTURE ==================================
 
-const popupZoomPictureElement = document.querySelector(
+export const popupZoomPictureElement = document.querySelector(
   ".popup_type_zoom-picture"
 );
-const popupZoomPictureCloseButton = popupZoomPictureElement.querySelector(
-  ".popup__close_type_zoom-picture"
+export const popupZoomPictureCloseButton =
+  popupZoomPictureElement.querySelector(".popup__close_type_zoom-picture");
+export const zoomPictureElement = document.querySelector(".zoom-picture");
+export const zoomPictureImg = zoomPictureElement.querySelector(
+  ".zoom-picture__image"
 );
-const zoomPictureElement = document.querySelector(".zoom-picture");
-const zoomPictureImg = zoomPictureElement.querySelector(".zoom-picture__image");
-const zoomPictureCaption = zoomPictureElement.querySelector(
+export const zoomPictureCaption = zoomPictureElement.querySelector(
   ".zoom-picture__caption"
 );
 
 //================================ VALIDATION ==================================
 
-const profileFormValidator = new FormValidator(
+export const profileFormValidator = new FormValidator(
   validationConfig,
   formProfileElement
 );
-const cardFormValidator = new FormValidator(validationConfig, formCardElement);
+export const cardFormValidator = new FormValidator(
+  validationConfig,
+  formCardElement
+);
 
 //==============================================================================
-
-
-export {
-  // profile
-  profileUserName,
-  profileUserOccupation,
-  profileEditButton,
-  profileAddButton,
-  popupProfileCloseButton,
-  formProfileElement,
-  formUserName,
-  formUserOccupation,
-  popupProfileElement,
-  // card
-  cardsContainer,
-  cardsContainerSelector,
-  popupCardElement,
-  popupCardCloseButton,
-  formCardElement,
-  formCardName,
-  formCardImgLink,
-  // zoom picture
-  popupZoomPictureElement,
-  popupZoomPictureCloseButton,
-  zoomPictureImg,
-  zoomPictureCaption,
-  // validation
-  profileFormValidator,
-  cardFormValidator,
-};

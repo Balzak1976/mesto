@@ -4,11 +4,10 @@ function handleCloseByOverlayClick(evt) {
   }
 }
 
-function handleCloseByEsc(evt) {
-  if (evt.key === "Escape") {
-    const popupElement = document.querySelector('.popup_opened');
-    closePopup(popupElement);
-  }
+function openPopup(popupElement) {
+  popupElement.classList.add("popup_opened");
+
+  document.addEventListener("keydown", handleCloseByEsc);
 }
 
 function closePopup(popupElement) {
@@ -16,12 +15,12 @@ function closePopup(popupElement) {
   document.removeEventListener("keydown", handleCloseByEsc);
 }
 
-function openPopup(popupElement) {
-  popupElement.classList.add("popup_opened");
-
-  document.addEventListener("keydown", handleCloseByEsc);
+function handleCloseByEsc(evt) {
+  if (evt.key === "Escape") {
+    const popupElement = document.querySelector(".popup_opened");
+    closePopup(popupElement);
+  }
 }
-
 //==============================================================================
 
 export { handleCloseByOverlayClick, closePopup, openPopup };

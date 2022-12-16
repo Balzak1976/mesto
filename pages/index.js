@@ -1,6 +1,7 @@
 import { dataCards } from "../utils/settings.js";
 import Card from "../components/Сard.js";
 import Section from "../components/Section.js";
+import Popup from "../components/Popup.js";
 
 import {
   handleCloseByOverlayClick,
@@ -14,7 +15,6 @@ import {
   profileUserOccupation,
   profileEditButton,
   profileAddButton,
-  popupProfileCloseButton,
   formProfileElement,
   formUserName,
   formUserOccupation,
@@ -23,7 +23,6 @@ import {
   cardsContainer,
   cardsContainerSelector,
   popupCardElement,
-  popupCardCloseButton,
   formCardElement,
   formCardName,
   formCardImgLink,
@@ -59,6 +58,14 @@ cardsList.renderItems();
 
 profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
+
+//=============================== POPUP CLASS ==================================
+
+const popupProfile = new Popup(".popup_type_profile");
+popupProfile.setEventListeners();
+
+const popupCard = new Popup(".popup_type_card");
+popupCard.setEventListeners();
 
 //============================ FUNCTION =======================================
 
@@ -116,23 +123,16 @@ function handleCardFormSubmit(evt) {
 
 //========================= PROFILE LISTENER ===================================
 
-profileEditButton.addEventListener("click", handleProfileEditButtonClick);
-
-popupProfileCloseButton.addEventListener("click", () =>
-  closePopup(popupProfileElement)
+profileEditButton.addEventListener(
+  "click",
+  popupProfile.open.bind(popupProfile)
 );
-popupProfileElement.addEventListener("click", handleCloseByOverlayClick);
 
 formProfileElement.addEventListener("submit", handleProfileFormSubmit);
 
 //=========================== CARDS LISTENER ===================================
 
-profileAddButton.addEventListener("click", handleProfileAddButtonClick);
-
-popupCardCloseButton.addEventListener("click", () =>
-  closePopup(popupCardElement)
-);
-popupCardElement.addEventListener("click", handleCloseByOverlayClick);
+profileAddButton.addEventListener("click", popupCard.open.bind(popupCard));
 
 formCardElement.addEventListener("submit", handleCardFormSubmit);
 

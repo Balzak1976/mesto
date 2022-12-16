@@ -1,10 +1,10 @@
 export default class Card {
   static _template = document.querySelector(".card-template").content;
 
-  constructor(data, handleOpenImagePopup) {
+  constructor(data, handleCardClick) {
     this._nameImage = data.name;
     this._linkImage = data.link;
-    this._handleOpenImagePopup = handleOpenImagePopup;
+    this._handleCardClick = handleCardClick;
   }
 
   createCard() {
@@ -38,7 +38,7 @@ export default class Card {
     });
 
     this._image.addEventListener("click", () => {
-      this._handleOpenImagePopup();
+      this._handleCardClick(this._linkImage, this._nameImage);
     });
   }
 

@@ -2,6 +2,7 @@ import { dataCards } from "../utils/settings.js";
 import Card from "../components/Сard.js";
 import Section from "../components/Section.js";
 import Popup from "../components/Popup.js";
+import PopupWithImage from "../components/PopupWithImage.js";
 
 import {
   handleCloseByOverlayClick,
@@ -36,13 +37,24 @@ import {
   cardFormValidator,
 } from "../utils/const.js";
 
+//=============================== POPUP CLASS ==================================
+
+const popupProfile = new Popup(".popup_type_profile");
+popupProfile.setEventListeners();
+
+const popupCard = new Popup(".popup_type_card");
+popupCard.setEventListeners();
+
+const popupImage = new PopupWithImage(".popup_type_zoom-picture");
+popupImage.setEventListeners();
+
 //========================== RENDER CARDS ======================================
 
 const cardsList = new Section(
   {
     items: dataCards,
     renderer: (item) => {
-      const card = new Card(item, handleOpenImagePopup);
+      const card = new Card(item, popupImage.open.bind(popupImage));
 
       const cardElement = card.createCard();
 
@@ -58,14 +70,6 @@ cardsList.renderItems();
 
 profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
-
-//=============================== POPUP CLASS ==================================
-
-const popupProfile = new Popup(".popup_type_profile");
-popupProfile.setEventListeners();
-
-const popupCard = new Popup(".popup_type_card");
-popupCard.setEventListeners();
 
 //============================ FUNCTION =======================================
 
@@ -101,14 +105,6 @@ function renderCard(...args) {
   cardsContainer.prepend(new Card(...args).createCard());
 }
 
-function handleOpenImagePopup() {
-  openPopup(popupZoomPictureElement);
-
-  zoomPictureImg.src = this._linkImage;
-  zoomPictureImg.alt = this._nameImage;
-  zoomPictureCaption.textContent = this._nameImage;
-}
-
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
 
@@ -118,7 +114,7 @@ function handleCardFormSubmit(evt) {
   cardFormValidator.setInactiveButtonState();
 
   closePopup(popupCardElement);
-  renderCard(data, handleOpenImagePopup);
+  renderCard(data, popupImage.open.bind(popupImage));
 }
 
 //========================= PROFILE LISTENER ===================================
@@ -137,8 +133,3 @@ profileAddButton.addEventListener("click", popupCard.open.bind(popupCard));
 formCardElement.addEventListener("submit", handleCardFormSubmit);
 
 //======================== ZOOM PICTURE LISTENER ===============================
-
-popupZoomPictureCloseButton.addEventListener("click", (evt) =>
-  closePopup(popupZoomPictureElement)
-);
-popupZoomPictureElement.addEventListener("click", handleCloseByOverlayClick);

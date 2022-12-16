@@ -55,6 +55,7 @@ export const popupZoomPictureElement = document.querySelector(
 );
 export const popupZoomPictureCloseButton =
   popupZoomPictureElement.querySelector(".popup__close_type_zoom-picture");
+
 export const zoomPictureElement = document.querySelector(".zoom-picture");
 export const zoomPictureImg = zoomPictureElement.querySelector(
   ".zoom-picture__image"

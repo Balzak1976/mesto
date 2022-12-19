@@ -1,4 +1,4 @@
-import { dataCards } from "../utils/settings.js";
+import { dataCards, validationConfig } from "../utils/settings.js";
 import Card from "../components/Сard.js";
 import Section from "../components/Section.js";
 import Popup from "../components/Popup.js";
@@ -36,18 +36,23 @@ import {
   profileFormValidator,
   cardFormValidator,
 } from "../utils/const.js";
+import PopupWithForm from "../components/PopupWithForm.js";
 
-//=============================== POPUP CLASS ==================================
-
-const popupProfile = new Popup(".popup_type_profile");
-popupProfile.setEventListeners();
-
-const popupCard = new Popup(".popup_type_card");
-popupCard.setEventListeners();
+//=============================== POPUP IMAGE ==================================
 
 const popupImage = new PopupWithImage(".popup_type_zoom-picture");
 popupImage.setEventListeners();
 
+//============================== POPUP WITH FORM ===============================
+
+const formProfile = new PopupWithForm(
+  ".popup_type_profile",
+  handleProfileFormSubmit
+);
+formProfile.setEventListeners();
+
+const formCard = new PopupWithForm(".popup_type_card", handleCardFormSubmit);
+formCard.setEventListeners();
 //========================== RENDER CARDS ======================================
 
 const cardsList = new Section(
@@ -77,59 +82,40 @@ function fillProfilePopupFromProfile() {
   formUserName.value = profileUserName.textContent.trim();
   formUserOccupation.value = profileUserOccupation.textContent.trim();
 }
-
-function handleProfileFormSubmit(evt) {
+ 
+function handleProfileFormSubmit(evt, { userName, userOccupation }) {
   evt.preventDefault();
 
-  profileUserName.textContent = formUserName.value;
-  profileUserOccupation.textContent = formUserOccupation.value;
-
-  closePopup(popupProfileElement);
-}
-
-function handleProfileEditButtonClick() {
-  // скрываем старые сообщения ошибок валидации
-  profileFormValidator.hideFormValidationErrors();
-  fillProfilePopupFromProfile();
-  openPopup(popupProfileElement);
-}
-
-function handleProfileAddButtonClick() {
-  // скрываем старые сообщения ошибок валидации
-  cardFormValidator.hideFormValidationErrors();
-  formCardElement.reset();
-  openPopup(popupCardElement);
+  profileUserName.textContent = userName;
+  profileUserOccupation.textContent = userOccupation;
 }
 
 function renderCard(...args) {
   cardsContainer.prepend(new Card(...args).createCard());
 }
 
-function handleCardFormSubmit(evt) {
+function handleCardFormSubmit(evt, data) {
   evt.preventDefault();
-
-  const data = { name: formCardName.value, link: formCardImgLink.value };
-
   // блокируем кнопку при повторном открытии формы, чтобы не создать пустую карточку
   cardFormValidator.setInactiveButtonState();
 
-  closePopup(popupCardElement);
   renderCard(data, popupImage.open.bind(popupImage));
 }
 
 //========================= PROFILE LISTENER ===================================
 
-profileEditButton.addEventListener(
-  "click",
-  popupProfile.open.bind(popupProfile)
-);
+profileEditButton.addEventListener("click", () => {
+  // скрываем старые сообщения ошибок валидации
+  profileFormValidator.hideFormValidationErrors.call(profileFormValidator);
 
-formProfileElement.addEventListener("submit", handleProfileFormSubmit);
+  formProfile.open.call(formProfile);
+});
 
-//=========================== CARDS LISTENER ===================================
+//=========================== CARD LISTENER ===================================
 
-profileAddButton.addEventListener("click", popupCard.open.bind(popupCard));
+profileAddButton.addEventListener("click", () => {
+  // скрываем старые сообщения ошибок валидации
+  cardFormValidator.hideFormValidationErrors.call(cardFormValidator);
 
-formCardElement.addEventListener("submit", handleCardFormSubmit);
-
-//======================== ZOOM PICTURE LISTENER ===============================
+  formCard.open.call(formCard);
+});

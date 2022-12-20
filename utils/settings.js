@@ -32,3 +32,10 @@ export const validationConfig = {
   inputErrorClass: "form__input_type_error",
   errorClass: "form__input-error_active",
 };
+
+export const profileSelectors = {
+  userName: ".profile__user-name",
+  userOccupation: ".profile__user-occupation",
+};
+
+export const cardsContainerSelector = ".cards__list";

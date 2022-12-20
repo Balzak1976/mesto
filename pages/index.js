@@ -1,9 +1,16 @@
-import { dataCards } from "../utils/settings.js";
 import Card from "../components/Сard.js";
+import FormValidator from "../components/FormValidator.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
+
+import {
+  dataCards,
+  validationConfig,
+  profileSelectors,
+  cardsContainerSelector,
+} from "../utils/settings.js";
 
 import {
   // profile
@@ -12,27 +19,11 @@ import {
   profileAddButton,
   // card
   cardsContainer,
-  cardsContainerSelector,
-  popupCardElement,
-  formCardElement,
-  formCardName,
-  formCardImgLink,
-  // zoom picture
-  popupZoomPictureElement,
-  zoomPictureImg,
-  zoomPictureCaption,
-  popupZoomPictureCloseButton,
-  // validation
-  profileFormValidator,
-  cardFormValidator,
 } from "../utils/const.js";
 
 //================================= USER INFO ==================================
 
-const userInfo = new UserInfo(profileElement, {
-  userName: ".profile__user-name",
-  userOccupation: ".profile__user-occupation",
-});
+const userInfo = new UserInfo(profileElement, profileSelectors);
 
 //============================== POPUP WITH FORM ===============================
 
@@ -69,6 +60,16 @@ const cardsList = new Section(
 cardsList.renderItems();
 
 //=========================== VALIDATION ======================================
+
+const profileFormValidator = new FormValidator(
+  validationConfig,
+  formProfile.formElement
+);
+
+const cardFormValidator = new FormValidator(
+  validationConfig,
+  formCard.formElement
+);
 
 profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
@@ -107,8 +108,6 @@ profileEditButton.addEventListener("click", () => {
 
   formProfile.open.call(formProfile);
 });
-
-//=========================== CARD LISTENER ===================================
 
 profileAddButton.addEventListener("click", () => {
   // скрываем старые сообщения ошибок валидации

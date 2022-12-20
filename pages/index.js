@@ -1,25 +1,15 @@
-import { dataCards, validationConfig } from "../utils/settings.js";
+import { dataCards } from "../utils/settings.js";
 import Card from "../components/Сard.js";
 import Section from "../components/Section.js";
-import Popup from "../components/Popup.js";
 import PopupWithImage from "../components/PopupWithImage.js";
-
-import {
-  handleCloseByOverlayClick,
-  closePopup,
-  openPopup,
-} from "../utils/utils.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import UserInfo from "../components/UserInfo.js";
 
 import {
   // profile
-  profileUserName,
-  profileUserOccupation,
+  profileElement,
   profileEditButton,
   profileAddButton,
-  formProfileElement,
-  formUserName,
-  formUserOccupation,
-  popupProfileElement,
   // card
   cardsContainer,
   cardsContainerSelector,
@@ -36,12 +26,13 @@ import {
   profileFormValidator,
   cardFormValidator,
 } from "../utils/const.js";
-import PopupWithForm from "../components/PopupWithForm.js";
 
-//=============================== POPUP IMAGE ==================================
+//================================= USER INFO ==================================
 
-const popupImage = new PopupWithImage(".popup_type_zoom-picture");
-popupImage.setEventListeners();
+const userInfo = new UserInfo(profileElement, {
+  userName: ".profile__user-name",
+  userOccupation: ".profile__user-occupation",
+});
 
 //============================== POPUP WITH FORM ===============================
 
@@ -53,6 +44,12 @@ formProfile.setEventListeners();
 
 const formCard = new PopupWithForm(".popup_type_card", handleCardFormSubmit);
 formCard.setEventListeners();
+
+//============================= POPUP IMAGE ====================================
+
+const popupImage = new PopupWithImage(".popup_type_zoom-picture");
+popupImage.setEventListeners();
+
 //========================== RENDER CARDS ======================================
 
 const cardsList = new Section(
@@ -78,20 +75,14 @@ cardFormValidator.enableValidation();
 
 //============================ FUNCTION =======================================
 
-function fillProfilePopupFromProfile() {
-  formUserName.value = profileUserName.textContent.trim();
-  formUserOccupation.value = profileUserOccupation.textContent.trim();
+function renderCard(...args) {
+  cardsContainer.prepend(new Card(...args).createCard());
 }
- 
+
 function handleProfileFormSubmit(evt, { userName, userOccupation }) {
   evt.preventDefault();
 
-  profileUserName.textContent = userName;
-  profileUserOccupation.textContent = userOccupation;
-}
-
-function renderCard(...args) {
-  cardsContainer.prepend(new Card(...args).createCard());
+  userInfo.setUserInfo(userName, userOccupation);
 }
 
 function handleCardFormSubmit(evt, data) {
@@ -107,6 +98,12 @@ function handleCardFormSubmit(evt, data) {
 profileEditButton.addEventListener("click", () => {
   // скрываем старые сообщения ошибок валидации
   profileFormValidator.hideFormValidationErrors.call(profileFormValidator);
+
+  // заполняем поля формы из профиля
+  formProfile.setInputValues.call(
+    formProfile,
+    userInfo.getUserInfo.call(userInfo)
+  );
 
   formProfile.open.call(formProfile);
 });

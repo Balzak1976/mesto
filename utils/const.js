@@ -4,12 +4,7 @@ import { validationConfig } from "./settings.js";
 //============================ PROFILE =======================================
 
 export const profileElement = document.querySelector(".profile");
-export const profileUserName = profileElement.querySelector(
-  ".profile__user-name"
-);
-export const profileUserOccupation = profileElement.querySelector(
-  ".profile__user-occupation"
-);
+
 export const profileEditButton = profileElement.querySelector(
   ".profile__edit-button"
 );

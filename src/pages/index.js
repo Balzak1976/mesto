@@ -14,12 +14,9 @@ import {
 } from "../utils/settings.js";
 
 import {
-  // profile
   profileElement,
   profileEditButton,
   profileAddButton,
-  // card
-  cardsContainer,
 } from "../utils/const.js";
 
 //================================= USER INFO ==================================
@@ -57,7 +54,7 @@ const cardsList = new Section(
   },
   cardsContainerSelector
 );
-
+// console.dir(cardsList);
 cardsList.renderItems();
 
 //=========================== VALIDATION ======================================
@@ -77,10 +74,6 @@ cardFormValidator.enableValidation();
 
 //============================ FUNCTION =======================================
 
-function renderCard(...args) {
-  cardsContainer.prepend(new Card(...args).createCard());
-}
-
 function handleProfileFormSubmit(evt, { userName, userOccupation }) {
   evt.preventDefault();
 
@@ -92,7 +85,21 @@ function handleCardFormSubmit(evt, data) {
   // блокируем кнопку при повторном открытии формы, чтобы не создать пустую карточку
   cardFormValidator.setInactiveButtonState();
 
-  renderCard(data, popupImage.open.bind(popupImage));
+  const newCard = new Section(
+    {
+      items: [data],
+      renderer: (item) => {
+        const card = new Card(item, popupImage.open.bind(popupImage));
+
+        const cardElement = card.createCard();
+
+        newCard.addItem(cardElement);
+      },
+    },
+    cardsContainerSelector
+  );
+
+  newCard.renderItems();
 }
 
 //========================= PROFILE LISTENER ===================================

@@ -8,7 +8,3 @@ export const profileEditButton = profileElement.querySelector(
 export const profileAddButton = profileElement.querySelector(
   ".profile__add-button"
 );
-
-//============================ CARDS ==========================================
-
-export const cardsContainer = document.querySelector(".cards__list");

@@ -54,7 +54,7 @@ const cardsList = new Section(
   },
   cardsContainerSelector
 );
-// console.dir(cardsList);
+
 cardsList.renderItems();
 
 //=========================== VALIDATION ======================================

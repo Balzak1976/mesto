@@ -5,8 +5,6 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
-  <script defer type="module" src="./pages/index.js"></script>
   <title>Mesto</title>
 </head>
 
@@ -18,7 +16,7 @@
       <a href="#">
         <img
           class="logo"
-          src="./images/logo.svg"
+          src="<%=require('./images/logo.svg')%>"
           alt="логотип"
         >
       </a>
@@ -30,7 +28,7 @@
       <section class="profile">
         <img
           class="profile__user-avatar"
-          src="./images/avatar.jpg"
+          src="<%=require('./images/avatar.jpg')%>"
           alt="аватар"
         >
         <article class="profile__info">

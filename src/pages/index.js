@@ -13,10 +13,7 @@ import {
   cardsContainerSelector,
 } from "../utils/settings.js";
 
-import {
-  profileEditButton,
-  profileAddButton,
-} from "../utils/const.js";
+import { profileEditButton, profileAddButton } from "../utils/const.js";
 
 //================================= USER INFO ==================================
 
@@ -41,20 +38,7 @@ popupImage.setEventListeners();
 //========================== RENDER CARDS ======================================
 
 const cardsList = new Section(
-  {
-    items: dataCards,
-    renderer: (item) => {
-      const card = new Card(
-        item,
-        ".card-template",
-        popupImage.open.bind(popupImage)
-      );
-
-      const cardElement = card.createCard();
-
-      cardsList.addItem(cardElement);
-    },
-  },
+  { items: dataCards, renderer: renderCard },
   cardsContainerSelector
 );
 
@@ -77,6 +61,16 @@ cardFormValidator.enableValidation();
 
 //============================ FUNCTION =======================================
 
+function renderCard(data) {
+  const card = new Card(
+    data,
+    ".card-template",
+    popupImage.open.bind(popupImage)
+  );
+
+  return card.createCard();
+}
+
 function handleProfileFormSubmit({ userName, userOccupation }) {
   userInfo.setUserInfo(userName, userOccupation);
 }
@@ -85,45 +79,25 @@ function handleCardFormSubmit(data) {
   // блокируем кнопку при повторном открытии формы, чтобы не создать пустую карточку
   cardFormValidator.setInactiveButtonState();
 
-  const newCard = new Section(
-    {
-      items: [data],
-      renderer: (item) => {
-        const card = new Card(
-          item,
-          ".card-template",
-          popupImage.open.bind(popupImage)
-        );
-
-        const cardElement = card.createCard();
-
-        newCard.addItem(cardElement);
-      },
-    },
-    cardsContainerSelector
-  );
-
-  newCard.renderItems();
+  cardsList.renderedItems = [data];
+  cardsList.renderItems();
 }
 
 //========================= PROFILE LISTENER ===================================
 
 profileEditButton.addEventListener("click", () => {
   // скрываем старые сообщения ошибок валидации
-  profileFormValidator.hideFormValidationErrors.call(profileFormValidator);
+  profileFormValidator.hideFormValidationErrors();
 
   // заполняем поля формы из профиля
-  formProfile.setInputValues.call(
-    formProfile,
-    userInfo.getUserInfo.call(userInfo)
-  );
+  formProfile.setInputValues(userInfo.getUserInfo());
 
-  formProfile.open.call(formProfile);
+  formProfile.open();
 });
 
 profileAddButton.addEventListener("click", () => {
   // скрываем старые сообщения ошибок валидации
-  cardFormValidator.hideFormValidationErrors.call(cardFormValidator);
+  cardFormValidator.hideFormValidationErrors();
 
-  formCard.open.call(formCard);
+  formCard.open();
 });

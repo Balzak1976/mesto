@@ -1,16 +1,11 @@
+import { cardsContainerSelector } from "../utils/settings";
+
 export default class Card {
   constructor(data, templateSelector, handleCardClick) {
     this.templateSelector = templateSelector;
     this._nameImage = data.name;
     this._linkImage = data.link;
     this._handleCardClick = handleCardClick;
-  }
-
-  _createCardElement() {
-    return document
-      .querySelector(this.templateSelector)
-      .content.querySelector(".card__item")
-      .cloneNode(true);
   }
 
   createCard() {
@@ -28,6 +23,13 @@ export default class Card {
     this._setListenersOnCard();
 
     return this._cardElement;
+  }
+
+  _createCardElement() {
+    return document
+      .querySelector(this.templateSelector)
+      .content.querySelector(".card__item")
+      .cloneNode(true);
   }
 
   _setListenersOnCard() {

@@ -1,6 +1,6 @@
 //============================ PROFILE =======================================
 
-export const profileElement = document.querySelector(".profile");
+const profileElement = document.querySelector(".profile");
 
 export const profileEditButton = profileElement.querySelector(
   ".profile__edit-button"

@@ -14,14 +14,13 @@ import {
 } from "../utils/settings.js";
 
 import {
-  profileElement,
   profileEditButton,
   profileAddButton,
 } from "../utils/const.js";
 
 //================================= USER INFO ==================================
 
-const userInfo = new UserInfo(profileElement, profileSelectors);
+const userInfo = new UserInfo(profileSelectors);
 
 //============================== POPUP WITH FORM ===============================
 

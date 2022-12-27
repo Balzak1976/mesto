@@ -65,7 +65,7 @@ function renderCard(data) {
   const card = new Card(
     data,
     ".card-template",
-    popupImage.open.bind(popupImage)
+    popupImage.open
   );
 
   return card.createCard();

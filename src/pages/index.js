@@ -78,14 +78,11 @@ cardFormValidator.enableValidation();
 
 //============================ FUNCTION =======================================
 
-function handleProfileFormSubmit(evt, { userName, userOccupation }) {
-  evt.preventDefault();
-
+function handleProfileFormSubmit({ userName, userOccupation }) {
   userInfo.setUserInfo(userName, userOccupation);
 }
 
-function handleCardFormSubmit(evt, data) {
-  evt.preventDefault();
+function handleCardFormSubmit(data) {
   // блокируем кнопку при повторном открытии формы, чтобы не создать пустую карточку
   cardFormValidator.setInactiveButtonState();
 

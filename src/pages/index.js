@@ -45,7 +45,11 @@ const cardsList = new Section(
   {
     items: dataCards,
     renderer: (item) => {
-      const card = new Card(item, popupImage.open.bind(popupImage));
+      const card = new Card(
+        item,
+        ".card-template",
+        popupImage.open.bind(popupImage)
+      );
 
       const cardElement = card.createCard();
 
@@ -89,7 +93,11 @@ function handleCardFormSubmit(evt, data) {
     {
       items: [data],
       renderer: (item) => {
-        const card = new Card(item, popupImage.open.bind(popupImage));
+        const card = new Card(
+          item,
+          ".card-template",
+          popupImage.open.bind(popupImage)
+        );
 
         const cardElement = card.createCard();
 

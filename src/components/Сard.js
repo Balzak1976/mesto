@@ -1,14 +1,20 @@
 export default class Card {
-  static _template = document.querySelector(".card-template").content;
-
-  constructor(data, handleCardClick) {
+  constructor(data, templateSelector, handleCardClick) {
+    this.templateSelector = templateSelector;
     this._nameImage = data.name;
     this._linkImage = data.link;
     this._handleCardClick = handleCardClick;
   }
 
+  _createCardElement() {
+    return document
+      .querySelector(this.templateSelector)
+      .content.querySelector(".card__item")
+      .cloneNode(true);
+  }
+
   createCard() {
-    this._cardElement = Card._template.cloneNode(true).children[0];
+    this._cardElement = this._createCardElement();
 
     this._cardImage = this._cardElement.querySelector(".card__image");
 
@@ -43,7 +49,7 @@ export default class Card {
   }
 
   _deleteCard() {
-    this._deleteButton.closest(".card__item").remove();
+    this._cardElement.remove();
   }
 
   _toggleLikeButton() {

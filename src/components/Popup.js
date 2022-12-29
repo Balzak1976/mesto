@@ -24,11 +24,11 @@ export default class Popup {
     );
   }
 
-  _handleEscClose = ((evt) => {
+  _handleEscClose = (evt) => {
     if (evt.key === "Escape") {
       this.close();
     }
-  }).bind(this);
+  }
 
   _handleOverlayClickClose(evt) {
     if (evt.target === evt.currentTarget) {

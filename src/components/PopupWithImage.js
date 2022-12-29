@@ -11,11 +11,11 @@ export default class PopupWithImage extends Popup {
     );
   }
 
-  open = ((linkImage, nameImage) => {
+  open = (linkImage, nameImage) => {
     super.open();
 
     this._zoomPictureImg.src = linkImage;
     this._zoomPictureImg.alt = nameImage;
     this._zoomPictureCaption.textContent = nameImage;
-  }).bind(this);
+  }
 }

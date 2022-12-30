@@ -62,13 +62,9 @@ cardFormValidator.enableValidation();
 //============================ FUNCTION =======================================
 
 function renderCard(data) {
-  const card = new Card(
-    data,
-    ".card-template",
-    popupImage.open
-  );
+  const card = new Card(data, ".card-template", popupImage.open);
 
-  return card.createCard();
+  cardsList.addItem(card.createCard());
 }
 
 function handleProfileFormSubmit({ userName, userOccupation }) {
@@ -79,8 +75,7 @@ function handleCardFormSubmit(data) {
   // блокируем кнопку при повторном открытии формы, чтобы не создать пустую карточку
   cardFormValidator.setInactiveButtonState();
 
-  cardsList.renderedItems = [data];
-  cardsList.renderItems();
+  renderCard(data);
 }
 
 //========================= PROFILE LISTENER ===================================

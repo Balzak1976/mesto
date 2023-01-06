@@ -1,6 +1,6 @@
 import "./index.css";
 import Card from "../components/Сard.js";
-import Api from "../components/Api.js"
+import Api from "../components/Api.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
@@ -19,20 +19,22 @@ import { profileEditButton, profileAddButton } from "../utils/const.js";
 //==================================== API =====================================
 
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-57',
+  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-57",
   headers: {
-    authorization: '4f5c1ea4-b5a2-4f77-88d2-569b5dbe0c66',
-    'Content-Type': 'application/json'
-  }
+    authorization: "4f5c1ea4-b5a2-4f77-88d2-569b5dbe0c66",
+    "Content-Type": "application/json",
+  },
 });
-
 
 //================================= USER INFO ==================================
 
 const userInfo = new UserInfo(profileSelectors);
 
-// api.getInitialUserInfo();
+api.getInitialUserInfo((res) => {
+  userInfo.setUserInfo(res.name, res.about, res.avatar);
+});
 
+// api.updateUserInfo();
 //============================== POPUP WITH FORM ===============================
 
 const formProfile = new PopupWithForm(
@@ -51,12 +53,15 @@ popupImage.setEventListeners();
 
 //========================== RENDER CARDS ======================================
 
-const cardsList = new Section(
-  { items: dataCards, renderer: renderCard },
-  cardsContainerSelector
-);
+api.getInitialCards((res) => {
+  const cardsList = new Section({
+      items: res,
+      renderer: (data) => renderCard(data, cardsList),
+    }, cardsContainerSelector
+  );
 
-cardsList.renderItems();
+  cardsList.renderItems();
+});
 
 //=========================== VALIDATION ======================================
 
@@ -75,7 +80,7 @@ cardFormValidator.enableValidation();
 
 //============================ FUNCTION =======================================
 
-function renderCard(data) {
+function renderCard(data, cardsList) {
   const card = new Card(data, ".card-template", popupImage.open);
 
   cardsList.addItem(card.createCard());

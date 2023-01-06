@@ -1,9 +1,8 @@
 export default class UserInfo {
   constructor(selectors) {
     this._userName = document.querySelector(selectors.userName);
-    this._userOccupation = document.querySelector(
-      selectors.userOccupation
-    );
+    this._userOccupation = document.querySelector(selectors.userOccupation);
+    this._userAvatar = document.querySelector(selectors.userAvatar);
   }
 
   getUserInfo() {
@@ -13,8 +12,9 @@ export default class UserInfo {
     };
   }
 
-  setUserInfo(userName, userOccupation) {
+  setUserInfo(userName, userOccupation, userAvatar) {
     this._userName.textContent = userName;
     this._userOccupation.textContent = userOccupation;
+    if (userAvatar) this._userAvatar.src = userAvatar;
   }
 }

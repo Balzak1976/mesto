@@ -36,6 +36,7 @@ export const validationConfig = {
 export const profileSelectors = {
   userName: ".profile__user-name",
   userOccupation: ".profile__user-occupation",
+  userAvatar: ".profile__user-avatar",
 };
 
 export const cardsContainerSelector = ".cards__list";

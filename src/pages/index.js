@@ -1,9 +1,10 @@
 import "./index.css";
 import Card from "../components/Сard.js";
+import Api from "../components/Api.js"
 import FormValidator from "../components/FormValidator.js";
-import Section from "../components/Section.js";
-import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 
 import {
@@ -15,9 +16,22 @@ import {
 
 import { profileEditButton, profileAddButton } from "../utils/const.js";
 
+//==================================== API =====================================
+
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-57',
+  headers: {
+    authorization: '4f5c1ea4-b5a2-4f77-88d2-569b5dbe0c66',
+    'Content-Type': 'application/json'
+  }
+});
+
+
 //================================= USER INFO ==================================
 
 const userInfo = new UserInfo(profileSelectors);
+
+// api.getInitialUserInfo();
 
 //============================== POPUP WITH FORM ===============================
 

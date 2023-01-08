@@ -49,15 +49,13 @@ popupImage.setEventListeners();
 
 //========================== RENDER CARDS ======================================
 
-api.getInitialCards((res) => {
-  const cardsList = new Section(
-    {
-      items: res,
-      renderer: (data) => renderCard(data, cardsList),
-    },
-    cardsContainerSelector
-  );
+const cardsList = new Section({
+    renderer: renderCard,
+  }, cardsContainerSelector
+);
 
+api.getInitialCards((dataCards) => {
+  cardsList.renderedItems = dataCards;
   cardsList.renderItems();
 });
 
@@ -78,8 +76,8 @@ cardFormValidator.enableValidation();
 
 //============================ FUNCTION =======================================
 
-function renderCard(data, cardsList) {
-  const card = new Card(data, ".card-template", popupImage.open);
+function renderCard(dataCards) {
+  const card = new Card(dataCards, ".card-template", popupImage.open);
 
   cardsList.addItem(card.createCard());
 }
@@ -89,11 +87,11 @@ function handleProfileFormSubmit(inputValues) {
   api.updateUserInfo(inputValues, userInfo.setUserInfo);
 }
 
-function handleCardFormSubmit(data) {
+function handleCardFormSubmit(dataCards) {
   // блокируем кнопку при повторном открытии формы, чтобы не создать пустую карточку
   cardFormValidator.setInactiveButtonState();
 
-  renderCard(data);
+  api.addNewCard(dataCards, renderCard);
 }
 
 //========================= PROFILE LISTENER ===================================

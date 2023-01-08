@@ -31,21 +31,22 @@ export default class Api {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify(dataUser),
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-
-      return Promise.reject(`Ошибка: ${res.status}`);
     })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
       .then((data) => {
         console.log(data);
-        // обновляем данные профиля на странице
-        this.getInitialUserInfo(callback);
+        // обновляем данные на странице
+        callback(data);
       })
-    .catch((err) => {
-      console.log(err);
-    });
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   getInitialCards(callback) {
@@ -60,13 +61,37 @@ export default class Api {
 
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      .then(callback)
+      .then((data) => {
+        // console.log(data);
+        callback(data);
+      })
       .catch((err) => {
         console.log(err);
       });
   }
 
+  addNewCard(dataCards, callback) {
+    fetch(`${this._baseUrl}/cards`, {
+      method: "POST",
+      headers: this._headers,
+      body: JSON.stringify(dataCards),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
 
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .then((data) => {
+        console.log(data);
+        // обновляем данные на странице
+        callback(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   /* _createFetch(urlTail) {
     const { baseUrl, ...headers } = this._params;

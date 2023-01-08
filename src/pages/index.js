@@ -29,12 +29,8 @@ const api = new Api({
 
 const userInfo = new UserInfo(profileSelectors);
 
-api.getInitialUserInfo((res) => {
-  userInfo.setUserInfo(res);
-});
+api.getInitialUserInfo(userInfo.setUserInfo);
 
-// console.log(userInfo);
-// api.updateUserInfo();
 //============================== POPUP WITH FORM ===============================
 
 const formProfile = new PopupWithForm(
@@ -54,10 +50,12 @@ popupImage.setEventListeners();
 //========================== RENDER CARDS ======================================
 
 api.getInitialCards((res) => {
-  const cardsList = new Section({
+  const cardsList = new Section(
+    {
       items: res,
       renderer: (data) => renderCard(data, cardsList),
-    }, cardsContainerSelector
+    },
+    cardsContainerSelector
   );
 
   cardsList.renderItems();
@@ -87,7 +85,8 @@ function renderCard(data, cardsList) {
 }
 
 function handleProfileFormSubmit(inputValues) {
-  userInfo.setUserInfo(inputValues);
+  // обновляем данные профиля на сервере
+  api.updateUserInfo(inputValues, userInfo.setUserInfo);
 }
 
 function handleCardFormSubmit(data) {

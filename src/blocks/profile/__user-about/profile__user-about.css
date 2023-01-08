@@ -1,4 +1,4 @@
-.profile__user-occupation {
+.profile__user-about {
   margin: 0;
   max-width: 225px;
   text-overflow: ellipsis;
@@ -10,7 +10,7 @@
 }
 
 @media screen and (max-width: 400px) {
-  .profile__user-occupation {
+  .profile__user-about {
     max-width: 225px;
     font-size: 14px;
     text-align: center;

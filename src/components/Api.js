@@ -8,7 +8,7 @@ export default class Api {
   getInitialUserInfo(callback) {
     fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
-      headers: this._headers
+      headers: this._headers,
     })
       .then((res) => {
         if (res.ok) {
@@ -26,7 +26,7 @@ export default class Api {
   getInitialCards(callback) {
     fetch(`${this._baseUrl}/cards`, {
       method: "GET",
-      headers: this._headers
+      headers: this._headers,
     })
       .then((res) => {
         if (res.ok) {
@@ -41,14 +41,20 @@ export default class Api {
       });
   }
 
-  updateUserInfo() {
-    fetch(`${this._baseUrl}/users/me`, {
+  updateUserInfo(userName, userAbout) {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        name: "Marie Skłodowska Curie",
-        about: "Physicist and Chemist",
+        name: userName,
+        about: userAbout,
       }),
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject(`Ошибка: ${res.status}`);
     });
   }
 

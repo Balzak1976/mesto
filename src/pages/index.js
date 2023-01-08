@@ -8,7 +8,6 @@ import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 
 import {
-  dataCards,
   validationConfig,
   profileSelectors,
   cardsContainerSelector,
@@ -31,9 +30,10 @@ const api = new Api({
 const userInfo = new UserInfo(profileSelectors);
 
 api.getInitialUserInfo((res) => {
-  userInfo.setUserInfo(res.name, res.about, res.avatar);
+  userInfo.setUserInfo(res);
 });
 
+// console.log(userInfo);
 // api.updateUserInfo();
 //============================== POPUP WITH FORM ===============================
 
@@ -86,8 +86,8 @@ function renderCard(data, cardsList) {
   cardsList.addItem(card.createCard());
 }
 
-function handleProfileFormSubmit({ userName, userOccupation }) {
-  userInfo.setUserInfo(userName, userOccupation);
+function handleProfileFormSubmit(inputValues) {
+  userInfo.setUserInfo(inputValues);
 }
 
 function handleCardFormSubmit(data) {

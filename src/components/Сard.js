@@ -1,15 +1,24 @@
 export default class Card {
-  constructor(data, templateSelector, handleCardClick) {
+  constructor(data, templateSelector, handleCardClick, isOwner, apiDeleteCard) {
     this._templateSelector = templateSelector;
+    this._data = data;
     this._nameImage = data.name;
     this._linkImage = data.link;
     this._handleCardClick = handleCardClick;
+    this._isOwner = isOwner;
+    this._apiDeleteCard = apiDeleteCard;
   }
 
   createCard() {
     this._cardElement = this._createCardElement();
 
+    this._delButtonElement =
+      this._cardElement.querySelector(".card__del-button");
     this._cardImage = this._cardElement.querySelector(".card__image");
+
+    if (!this._isOwner(this._data)) {
+      this._delButtonElement.classList.add("card__del-button_hidden");
+    }
 
     // наполняем содержимым
     this._cardImage.src = this._linkImage;
@@ -36,7 +45,7 @@ export default class Card {
     this._image = this._cardElement.querySelector(".card__image");
 
     this._deleteButton.addEventListener("click", () => {
-      this._deleteCard();
+      this._apiDeleteCard(this._data, this._deleteCard.bind(this))
     });
 
     this._likeButton.addEventListener("click", () => {

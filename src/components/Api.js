@@ -93,6 +93,29 @@ export default class Api {
       });
   }
 
+  deleteCard(dataCard, callback) {
+    fetch(`${this._baseUrl}/cards/${dataCard._id}`, {
+      method: "DELETE",
+      headers: this._headers,
+      body: '',
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .then((data) => {
+        console.log("deleteCard", data);
+        // обновляем данные на странице
+        callback(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   /* _createFetch(urlTail) {
     const { baseUrl, ...headers } = this._params;
 

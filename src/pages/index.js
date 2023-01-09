@@ -28,8 +28,9 @@ const api = new Api({
 //================================= USER INFO ==================================
 
 const userInfo = new UserInfo(profileSelectors);
+console.log(userInfo);
 
-api.getInitialUserInfo(userInfo.setUserInfo);
+api.getInitialUserInfo(userInfo.setUserInfo.bind(userInfo));
 
 //============================== POPUP WITH FORM ===============================
 
@@ -49,12 +50,17 @@ popupImage.setEventListeners();
 
 //========================== RENDER CARDS ======================================
 
-const cardsList = new Section({
+const cardsList = new Section(
+  {
     renderer: renderCard,
-  }, cardsContainerSelector
+  },
+  cardsContainerSelector
 );
 
 api.getInitialCards((dataCards) => {
+  console.log(dataCards);
+
+  //подгружаем данные карточек с сервера
   cardsList.renderedItems = dataCards;
   cardsList.renderItems();
 });
@@ -76,8 +82,14 @@ cardFormValidator.enableValidation();
 
 //============================ FUNCTION =======================================
 
-function renderCard(dataCards) {
-  const card = new Card(dataCards, ".card-template", popupImage.open);
+function renderCard(dataCard) {
+  const card = new Card(
+    dataCard,
+    ".card-template",
+    popupImage.open,
+    isOwner,
+    api.deleteCard.bind(api)
+  );
 
   cardsList.addItem(card.createCard());
 }
@@ -92,6 +104,13 @@ function handleCardFormSubmit(dataCards) {
   cardFormValidator.setInactiveButtonState();
 
   api.addNewCard(dataCards, renderCard);
+}
+
+function isOwner(dataCard) {
+  return (
+    dataCard.owner.name === userInfo.getUserInfo().name &&
+    dataCard.owner.about === userInfo.getUserInfo().about
+  );
 }
 
 //========================= PROFILE LISTENER ===================================

@@ -11,7 +11,7 @@ export default class PopupWithImage extends Popup {
     );
   }
 
-  open = (linkImage, nameImage) => {
+  open (linkImage, nameImage) {
     super.open();
 
     this._zoomPictureImg.src = linkImage;

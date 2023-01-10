@@ -4,6 +4,7 @@ import Api from "../components/Api.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithSubmit from "../components/PopupWithSubmit.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 
@@ -25,13 +26,6 @@ const api = new Api({
   },
 });
 
-//================================= USER INFO ==================================
-
-const userInfo = new UserInfo(profileSelectors);
-console.log(userInfo);
-
-api.getInitialUserInfo(userInfo.setUserInfo.bind(userInfo));
-
 //============================== POPUP WITH FORM ===============================
 
 const formProfile = new PopupWithForm(
@@ -43,24 +37,29 @@ formProfile.setEventListeners();
 const formCard = new PopupWithForm(".popup_type_card", handleCardFormSubmit);
 formCard.setEventListeners();
 
-//============================= POPUP IMAGE ====================================
-
 const popupImage = new PopupWithImage(".popup_type_zoom-picture");
 popupImage.setEventListeners();
 
-//========================== RENDER CARDS ======================================
+const popupDelCard = new PopupWithSubmit(
+  ".popup_type_delete",
+  api.deleteCard.bind(api)
+);
+popupDelCard.setEventListeners();
 
-const cardsList = new Section(
-  {
+//============================== PROMISES ======================================
+
+const userInfo = new UserInfo(profileSelectors);
+
+api.getInitialUserInfo((dataUser) => {
+  userInfo.setUserInfo(dataUser);
+});
+
+const cardsList = new Section({
     renderer: renderCard,
-  },
-  cardsContainerSelector
+  }, cardsContainerSelector
 );
 
 api.getInitialCards((dataCards) => {
-  console.log(dataCards);
-
-  //подгружаем данные карточек с сервера
   cardsList.renderedItems = dataCards;
   cardsList.renderItems();
 });
@@ -86,12 +85,16 @@ function renderCard(dataCard) {
   const card = new Card(
     dataCard,
     ".card-template",
-    popupImage.open,
     isOwner,
-    api.deleteCard.bind(api)
+    popupImage.open.bind(popupImage),
+    popupDelCard.open.bind(popupDelCard)
   );
 
   cardsList.addItem(card.createCard());
+}
+
+function isOwner(dataOwner) {
+  return dataOwner.name === userInfo.name && dataOwner.about === userInfo.about;
 }
 
 function handleProfileFormSubmit(inputValues) {
@@ -104,13 +107,6 @@ function handleCardFormSubmit(dataCards) {
   cardFormValidator.setInactiveButtonState();
 
   api.addNewCard(dataCards, renderCard);
-}
-
-function isOwner(dataCard) {
-  return (
-    dataCard.owner.name === userInfo.getUserInfo().name &&
-    dataCard.owner.about === userInfo.getUserInfo().about
-  );
 }
 
 //========================= PROFILE LISTENER ===================================

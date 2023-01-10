@@ -19,6 +19,7 @@ export default class Api {
       })
       .then((data) => {
         // console.log("InitialUserInfo:", data);
+        // обновляем данные на странице
         callback(data);
       })
       .catch((err) => {
@@ -40,7 +41,7 @@ export default class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
       })
       .then((data) => {
-        console.log(data);
+        console.log("updateUserInfo:", data);
         // обновляем данные на странице
         callback(data);
       })
@@ -62,7 +63,8 @@ export default class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
       })
       .then((data) => {
-        // console.log(data);
+        // console.log("getInitialCards:", data);
+        // обновляем данные на странице
         callback(data);
       })
       .catch((err) => {
@@ -84,7 +86,7 @@ export default class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
       })
       .then((data) => {
-        console.log(data);
+        console.log("addNewCard", data);
         // обновляем данные на странице
         callback(data);
       })
@@ -94,7 +96,7 @@ export default class Api {
   }
 
   deleteCard(dataCard, callback) {
-    fetch(`${this._baseUrl}/cards/${dataCard._id}`, {
+    fetch(`${this._baseUrl}/cards/${dataCard}`, {
       method: "DELETE",
       headers: this._headers,
       body: '',
@@ -109,7 +111,7 @@ export default class Api {
       .then((data) => {
         console.log("deleteCard", data);
         // обновляем данные на странице
-        callback(data);
+        callback();
       })
       .catch((err) => {
         console.log(err);

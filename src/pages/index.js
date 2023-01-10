@@ -4,6 +4,7 @@ import Api from "../components/Api.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithSubmit from "../components/PopupWithSubmit.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 
@@ -28,9 +29,8 @@ const api = new Api({
 //================================= USER INFO ==================================
 
 const userInfo = new UserInfo(profileSelectors);
-console.log(userInfo);
 
-api.getInitialUserInfo(userInfo.setUserInfo.bind(userInfo));
+api.getInitialUserInfo(userInfo.setUserInfo);
 
 //============================== POPUP WITH FORM ===============================
 
@@ -43,18 +43,20 @@ formProfile.setEventListeners();
 const formCard = new PopupWithForm(".popup_type_card", handleCardFormSubmit);
 formCard.setEventListeners();
 
-//============================= POPUP IMAGE ====================================
-
 const popupImage = new PopupWithImage(".popup_type_zoom-picture");
 popupImage.setEventListeners();
 
+const popupDelCard = new PopupWithSubmit(
+  ".popup_type_delete",
+  api.deleteCard.bind(api)
+)
+popupDelCard.setEventListeners();
+
 //========================== RENDER CARDS ======================================
 
-const cardsList = new Section(
-  {
+const cardsList = new Section({
     renderer: renderCard,
-  },
-  cardsContainerSelector
+  }, cardsContainerSelector
 );
 
 api.getInitialCards((dataCards) => {
@@ -83,15 +85,24 @@ cardFormValidator.enableValidation();
 //============================ FUNCTION =======================================
 
 function renderCard(dataCard) {
+  console.log(isOwner(dataCard));
+
   const card = new Card(
     dataCard,
     ".card-template",
-    popupImage.open,
-    isOwner,
-    api.deleteCard.bind(api)
+    () => true,
+    popupImage.open.bind(popupImage),
+    popupDelCard.open.bind(popupDelCard)
   );
 
   cardsList.addItem(card.createCard());
+}
+
+function isOwner(dataOwner) {
+  return (
+    dataOwner.name === userInfo.getUserInfo().name &&
+    dataOwner.about === userInfo.getUserInfo().about
+  );
 }
 
 function handleProfileFormSubmit(inputValues) {
@@ -104,13 +115,6 @@ function handleCardFormSubmit(dataCards) {
   cardFormValidator.setInactiveButtonState();
 
   api.addNewCard(dataCards, renderCard);
-}
-
-function isOwner(dataCard) {
-  return (
-    dataCard.owner.name === userInfo.getUserInfo().name &&
-    dataCard.owner.about === userInfo.getUserInfo().about
-  );
 }
 
 //========================= PROFILE LISTENER ===================================

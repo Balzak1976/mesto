@@ -94,7 +94,7 @@ export default class Api {
   }
 
   deleteCard(dataCard, callback) {
-    fetch(`${this._baseUrl}/cards/${dataCard._id}`, {
+    fetch(`${this._baseUrl}/cards/${dataCard}`, {
       method: "DELETE",
       headers: this._headers,
       body: '',
@@ -109,7 +109,7 @@ export default class Api {
       .then((data) => {
         console.log("deleteCard", data);
         // обновляем данные на странице
-        callback(data);
+        callback();
       })
       .catch((err) => {
         console.log(err);

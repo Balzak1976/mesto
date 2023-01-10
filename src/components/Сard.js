@@ -1,12 +1,19 @@
 export default class Card {
-  constructor(data, templateSelector, handleCardClick, isOwner, apiDeleteCard) {
+  constructor(
+    data,
+    templateSelector,
+    isOwner,
+    handleCardClick,
+    handleDelBtnClick
+  ) {
     this._templateSelector = templateSelector;
-    this._data = data;
     this._nameImage = data.name;
     this._linkImage = data.link;
-    this._handleCardClick = handleCardClick;
+    this._dataOwner = data.owner;
+    this._dataId = data._id;
     this._isOwner = isOwner;
-    this._apiDeleteCard = apiDeleteCard;
+    this._handleCardClick = handleCardClick;
+    this._handleDelBtnClick = handleDelBtnClick;
   }
 
   createCard() {
@@ -16,17 +23,15 @@ export default class Card {
       this._cardElement.querySelector(".card__del-button");
     this._cardImage = this._cardElement.querySelector(".card__image");
 
-    if (!this._isOwner(this._data)) {
+    if (!this._isOwner(this._dataOwner)) {
       this._delButtonElement.classList.add("card__del-button_hidden");
     }
 
-    // наполняем содержимым
     this._cardImage.src = this._linkImage;
     this._cardImage.alt = this._nameImage;
     this._cardElement.querySelector(".card__title").textContent =
       this._nameImage;
 
-    // устанавливаем обработчики на карточку
     this._setListenersOnCard();
 
     return this._cardElement;
@@ -45,7 +50,8 @@ export default class Card {
     this._image = this._cardElement.querySelector(".card__image");
 
     this._deleteButton.addEventListener("click", () => {
-      this._apiDeleteCard(this._data, this._deleteCard.bind(this))
+      // передаём в попап удаления карточки id карточки и колбэк удаления карточки из разметки
+      this._handleDelBtnClick(this._dataId, this._deleteCard.bind(this));
     });
 
     this._likeButton.addEventListener("click", () => {

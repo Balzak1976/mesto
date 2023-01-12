@@ -54,10 +54,7 @@ api.getInitialUserInfo((dataUser) => {
   userInfo.setUserInfo(dataUser);
 });
 
-const cardsList = new Section({
-    renderer: renderCard,
-  }, cardsContainerSelector
-);
+const cardsList = new Section({ renderer: renderCard }, cardsContainerSelector);
 
 api.getInitialCards((dataCards) => {
   cardsList.renderedItems = dataCards;

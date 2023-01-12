@@ -63,7 +63,7 @@ export default class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
       })
       .then((data) => {
-        // console.log("getInitialCards:", data);
+        console.log("getInitialCards:", data);
         // обновляем данные на странице
         callback(data);
       })

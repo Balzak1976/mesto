@@ -6,7 +6,7 @@ export default class Api {
   }
 
   getInitialUserInfo(callback) {
-    fetch(`${this._baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: this._headers,
     })
@@ -95,11 +95,12 @@ export default class Api {
       });
   }
 
-  deleteCard(dataCard, callback) {
-    fetch(`${this._baseUrl}/cards/${dataCard}`, {
+  deleteCard(dataCardId, callback) {
+    const url = `${this._baseUrl}/cards/${dataCardId}`;
+    fetch(url, {
       method: "DELETE",
       headers: this._headers,
-      body: '',
+      body: "",
     })
       .then((res) => {
         if (res.ok) {
@@ -118,22 +119,44 @@ export default class Api {
       });
   }
 
-  /* _createFetch(urlTail) {
-    const { baseUrl, ...headers } = this._params;
+  toggleLike(dataCard, isMyLike, callback) {
+    const url = `${this._baseUrl}/cards/${dataCard._id}/likes`;
+    // const isMyLike = this._hasMyLike(dataCard.likes);
 
-    fetch(baseUrl + urlTail, headers)
-      .then((res) => {
-        if (res.ok) {
-          return res.json()
-        }
+    const typeMethod = isMyLike ? "DELETE" : "PUT";
+    // console.log('typeMethod: ', typeMethod);
 
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-      .then((res) => {
-        console.dir(res);
+    this._createFetch(url, typeMethod, "")
+      .then((data) => {
+        // console.log("toggleLike", data);
+        // обновляем данные на странице
+        callback(data);
       })
       .catch((err) => {
         console.log(err);
       });
-  } */
+  }
+
+  _hasMyLike(dataLikes) {
+    const dataOwner = { name: "Balzak", about: "1976" };
+    // console.log("arrayLikes: ",dataLikes);
+
+    return dataLikes.some((like) => {
+      return like.name === dataOwner.name && like.about === dataOwner.about;
+    });
+  }
+
+  _createFetch(url, typeMethod, dataBody) {
+    return fetch(url, {
+      method: typeMethod,
+      headers: this._headers,
+      body: dataBody ? JSON.stringify(dataBody) : dataBody,
+    }).then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+
+      return Promise.reject(`Ошибка: ${res.status}`);
+    });
+  }
 }

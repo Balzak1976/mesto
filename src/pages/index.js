@@ -79,19 +79,14 @@ cardFormValidator.enableValidation();
 //============================ FUNCTION =======================================
 
 function renderCard(dataCard) {
-  const card = new Card(
-    dataCard,
-    ".card-template",
-    isOwner,
-    popupImage.open.bind(popupImage),
-    popupDelCard.open.bind(popupDelCard)
-  );
+  const card = new Card(dataCard, ".card-template", {
+    hasMyUserId: (data) => data.some((obj) => obj._id === userInfo.id),
+    handleCardClick: popupImage.open.bind(popupImage),
+    handleDelBtnClick: popupDelCard.open.bind(popupDelCard),
+    handleLikeBtnClick: api.toggleLike.bind(api),
+  });
 
   cardsList.addItem(card.createCard());
-}
-
-function isOwner(dataOwner) {
-  return dataOwner.name === userInfo.name && dataOwner.about === userInfo.about;
 }
 
 function handleProfileFormSubmit(inputValues) {

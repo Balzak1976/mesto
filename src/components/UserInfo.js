@@ -16,6 +16,7 @@ export default class UserInfo {
     this.name = data.name.trim();
     this.about = data.about.trim();
     this.avatar = data.avatar;
+    this.id = data._id;
 
     this._nameElem.textContent = data.name.trim();
     this._aboutElem.textContent = data.about.trim();

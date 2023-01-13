@@ -2,7 +2,9 @@
   width: 100%;
   padding: 0 20px 0;
   box-sizing: border-box;
+  min-height: 38px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: #000;
 }

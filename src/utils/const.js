@@ -8,3 +8,7 @@ export const profileEditButton = profileElement.querySelector(
 export const profileAddButton = profileElement.querySelector(
   ".profile__add-button"
 );
+
+export const profileUpdateAvatarButton = profileElement.querySelector(
+  ".profile__user-avatar"
+);

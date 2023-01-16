@@ -14,7 +14,11 @@ import {
   cardsContainerSelector,
 } from "../utils/settings.js";
 
-import { profileEditButton, profileAddButton } from "../utils/const.js";
+import {
+  profileEditButton,
+  profileAddButton,
+  profileUpdateAvatarButton,
+} from "../utils/const.js";
 
 //==================================== API =====================================
 
@@ -27,6 +31,12 @@ const api = new Api({
 });
 
 //============================== POPUP WITH FORM ===============================
+
+const formUpdateAvatar = new PopupWithForm(
+  ".popup_type_update-avatar",
+  handleAvatarFormSubmit
+);
+formUpdateAvatar.setEventListeners();
 
 const formProfile = new PopupWithForm(
   ".popup_type_profile",
@@ -62,6 +72,10 @@ api.getInitialCards((dataCards) => {
 });
 
 //=========================== VALIDATION ======================================
+const profileFormUpdateAvatarValidator = new FormValidator(
+  validationConfig,
+  formUpdateAvatar.formElement
+);
 
 const profileFormValidator = new FormValidator(
   validationConfig,
@@ -73,6 +87,7 @@ const cardFormValidator = new FormValidator(
   formCard.formElement
 );
 
+profileFormUpdateAvatarValidator.enableValidation();
 profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 
@@ -89,6 +104,11 @@ function renderCard(dataCard) {
   cardsList.addItem(card.createCard());
 }
 
+function handleAvatarFormSubmit(inputValues) {
+  // обновляем данные профиля на сервере
+  api.updateAvatar(inputValues, userInfo.setUserInfo);
+}
+
 function handleProfileFormSubmit(inputValues) {
   // обновляем данные профиля на сервере
   api.updateUserInfo(inputValues, userInfo.setUserInfo);
@@ -102,6 +122,13 @@ function handleCardFormSubmit(dataCards) {
 }
 
 //========================= PROFILE LISTENER ===================================
+
+profileUpdateAvatarButton.addEventListener("click", () => {
+  // скрываем старые сообщения ошибок валидации
+  profileFormUpdateAvatarValidator.hideFormValidationErrors();
+
+  formUpdateAvatar.open();
+});
 
 profileEditButton.addEventListener("click", () => {
   // скрываем старые сообщения ошибок валидации

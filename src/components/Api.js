@@ -27,6 +27,20 @@ export default class Api {
       });
   }
 
+  updateAvatar(dataAvatar, callback) {
+    const url = `${this._baseUrl}/users/me/avatar`;
+
+    this._createFetch(url, "PATCH", dataAvatar)
+      .then((data) => {
+        console.log("updateAvatar:", data);
+        // обновляем данные на странице
+        callback(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   updateUserInfo(dataUser, callback) {
     fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
@@ -63,7 +77,7 @@ export default class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
       })
       .then((data) => {
-        console.log("getInitialCards:", data);
+        // console.log("getInitialCards:", data);
         // обновляем данные на странице
         callback(data);
       })
@@ -135,15 +149,6 @@ export default class Api {
       .catch((err) => {
         console.log(err);
       });
-  }
-
-  _hasMyLike(dataLikes) {
-    const dataOwner = { name: "Balzak", about: "1976" };
-    // console.log("arrayLikes: ",dataLikes);
-
-    return dataLikes.some((like) => {
-      return like.name === dataOwner.name && like.about === dataOwner.about;
-    });
   }
 
   _createFetch(url, typeMethod, dataBody) {

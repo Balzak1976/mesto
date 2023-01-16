@@ -1,0 +1,6 @@
+.profile__avatar-cover {
+  background-image: url(../../../images/icon/icon-edit.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 26px;
+}

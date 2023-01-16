@@ -4,4 +4,10 @@
   object-fit: cover;
   object-position: center;
   border-radius: 50%;
+  transition: opacity 0.5s ease-in;
+}
+
+.profile__user-avatar:hover {
+  cursor: pointer;
+  opacity: 0.2;
 }

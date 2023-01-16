@@ -206,10 +206,10 @@
     </section>
     <!-- /.popup-zoom-picture -->
 
-    <section class="popup popup_type_delete">
+    <section class="popup popup_type_del-card">
       <div class="popup__container">
         <button
-          class="popup__close popup__close_type_delete"
+          class="popup__close"
           type="button"
           aria-label="закрыть"
         ></button>
@@ -231,7 +231,49 @@
 
       </div>
     </section>
-    <!-- /.popup-delete -->
+    <!-- /.popup-delete card -->
+
+    <section class="popup popup_type_edit-avatar">
+      <div class="popup__container">
+        <button
+          class="popup__close"
+          type="button"
+          aria-label="закрыть"
+        ></button>
+        <h2 class="popup__title">
+          Обновить аватар
+        </h2>
+
+        <form
+          class="form form_type_edit-avatar"
+          name="addCard"
+          novalidate
+        >
+          <fieldset class="form__container">
+            <label class="form__field">
+              <input
+                class="form__input form__input_avatar_img-link"
+                id="avatar-img-link-input"
+                placeholder="Ссылка на картинку"
+                name="link"
+                type="url"
+                required
+              >
+              <span class="form__input-error avatar-img-link-input-error">
+              </span>
+            </label>
+          </fieldset>
+          <button
+            class="form__submit"
+            name="submit"
+            type="submit"
+          >Сохранить</button>
+        </form>
+        <!-- /.form -->
+
+      </div>
+    </section>
+    <!-- /.popup-edit-avatar -->
 
   </div>
   <!-- /.page -->

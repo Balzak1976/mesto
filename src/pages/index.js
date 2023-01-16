@@ -41,7 +41,7 @@ const popupImage = new PopupWithImage(".popup_type_zoom-picture");
 popupImage.setEventListeners();
 
 const popupDelCard = new PopupWithSubmit(
-  ".popup_type_delete",
+  ".popup_type_del-card",
   api.deleteCard.bind(api)
 );
 popupDelCard.setEventListeners();

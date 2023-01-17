@@ -105,20 +105,35 @@ function renderCard(dataCard) {
 }
 
 function handleAvatarFormSubmit(inputValues) {
+  formUpdateAvatar.setButtonSubmitState();
   // обновляем данные профиля на сервере
-  api.updateAvatar(inputValues, userInfo.setUserInfo);
+  api.updateAvatar(inputValues, userInfo.setUserInfo)
+    .finally(() => {
+      formUpdateAvatar.setButtonSubmitState(false);
+      formUpdateAvatar.close();
+    });
 }
 
 function handleProfileFormSubmit(inputValues) {
+  formProfile.setButtonSubmitState();
   // обновляем данные профиля на сервере
-  api.updateUserInfo(inputValues, userInfo.setUserInfo);
+  api.updateUserInfo(inputValues, userInfo.setUserInfo)
+    .finally(() => {
+      formProfile.setButtonSubmitState(false);
+      formProfile.close();
+    });
 }
 
-function handleCardFormSubmit(dataCards) {
-  // блокируем кнопку при повторном открытии формы, чтобы не создать пустую карточку
-  cardFormValidator.setInactiveButtonState();
+function handleCardFormSubmit(inputValues) {
+  formCard.setButtonSubmitState();
 
-  api.addNewCard(dataCards, renderCard);
+  api.addNewCard(inputValues, renderCard)
+    .finally(() => {
+      formCard.setButtonSubmitState(false);
+      formCard.close();
+      // блокируем кнопку при повторном открытии формы, чтобы не создать пустую карточку
+      cardFormValidator.setInactiveButtonState();
+    });
 }
 
 //========================= PROFILE LISTENER ===================================

@@ -6,20 +6,10 @@ export default class Api {
   }
 
   getInitialUserInfo(callback) {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: "GET",
-      headers: this._headers,
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
+    const url = `${this._baseUrl}/users/me`;
 
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
+    return this._createFetch(url, "GET")
       .then((data) => {
-        // console.log("InitialUserInfo:", data);
-        // обновляем данные на странице
         callback(data);
       })
       .catch((err) => {
@@ -30,10 +20,8 @@ export default class Api {
   updateAvatar(dataAvatar, callback) {
     const url = `${this._baseUrl}/users/me/avatar`;
 
-    this._createFetch(url, "PATCH", dataAvatar)
+    return this._createFetch(url, "PATCH", dataAvatar)
       .then((data) => {
-        console.log("updateAvatar:", data);
-        // обновляем данные на странице
         callback(data);
       })
       .catch((err) => {
@@ -42,21 +30,10 @@ export default class Api {
   }
 
   updateUserInfo(dataUser, callback) {
-    fetch(`${this._baseUrl}/users/me`, {
-      method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify(dataUser),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
+    const url = `${this._baseUrl}/users/me`;
 
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
+    return this._createFetch(url, "PATCH", dataUser)
       .then((data) => {
-        console.log("updateUserInfo:", data);
-        // обновляем данные на странице
         callback(data);
       })
       .catch((err) => {
@@ -65,20 +42,10 @@ export default class Api {
   }
 
   getInitialCards(callback) {
-    fetch(`${this._baseUrl}/cards`, {
-      method: "GET",
-      headers: this._headers,
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
+    const url = `${this._baseUrl}/cards`;
 
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
+    return this._createFetch(url, "GET")
       .then((data) => {
-        // console.log("getInitialCards:", data);
-        // обновляем данные на странице
         callback(data);
       })
       .catch((err) => {
@@ -87,21 +54,10 @@ export default class Api {
   }
 
   addNewCard(dataCards, callback) {
-    fetch(`${this._baseUrl}/cards`, {
-      method: "POST",
-      headers: this._headers,
-      body: JSON.stringify(dataCards),
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
+    const url = `${this._baseUrl}/cards`;
 
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
+    return this._createFetch(url, "POST", dataCards)
       .then((data) => {
-        console.log("addNewCard", data);
-        // обновляем данные на странице
         callback(data);
       })
       .catch((err) => {
@@ -111,18 +67,8 @@ export default class Api {
 
   deleteCard(dataCardId, callback) {
     const url = `${this._baseUrl}/cards/${dataCardId}`;
-    fetch(url, {
-      method: "DELETE",
-      headers: this._headers,
-      body: "",
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
 
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
+    return this._createFetch(url, "DELETE")
       .then((data) => {
         console.log("deleteCard", data);
         // обновляем данные на странице
@@ -135,15 +81,10 @@ export default class Api {
 
   toggleLike(dataCard, isMyLike, callback) {
     const url = `${this._baseUrl}/cards/${dataCard._id}/likes`;
-    // const isMyLike = this._hasMyLike(dataCard.likes);
-
     const typeMethod = isMyLike ? "DELETE" : "PUT";
-    // console.log('typeMethod: ', typeMethod);
 
-    this._createFetch(url, typeMethod, "")
+    this._createFetch(url, typeMethod)
       .then((data) => {
-        // console.log("toggleLike", data);
-        // обновляем данные на странице
         callback(data);
       })
       .catch((err) => {

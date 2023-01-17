@@ -7,19 +7,19 @@ export default class UserInfo {
 
   getUserInfo() {
     return {
-      name: this._nameElem.textContent.trim(),
-      about: this._aboutElem.textContent.trim(),
+      name: this._nameElem.textContent,
+      about: this._aboutElem.textContent,
     };
   }
 
   setUserInfo = (data) => {
-    this.name = data.name.trim();
-    this.about = data.about.trim();
+    this.name = data.name;
+    this.about = data.about;
     this.avatar = data.avatar;
     this.id = data._id;
 
-    this._nameElem.textContent = data.name.trim();
-    this._aboutElem.textContent = data.about.trim();
+    this._nameElem.textContent = data.name;
+    this._aboutElem.textContent = data.about;
     this._avatarElem.src = this.avatar;
   };
 }

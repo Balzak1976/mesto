@@ -6,8 +6,9 @@
 .header{align-items:flex-start;border-bottom:1px solid #545454;box-sizing:border-box;display:flex;min-height:74px;width:100%}@media screen and (max-width:400px){.header{min-height:56px;padding:0 27px;width:100vw}}
 .content{align-items:center;box-sizing:border-box;display:flex;flex-direction:column;gap:50px;padding:40px 0 66px;width:100%}@media screen and (max-width:400px){.content{gap:36px;padding:42px 0 48px}}
 .profile{align-items:center;display:flex;flex-wrap:wrap;gap:30px;justify-content:center;width:100%}
-.profile__avatar-cover{background-image:url(images/icon-edit.6c7bf05444b9793fdf6e.svg);background-position:50%;background-repeat:no-repeat;background-size:26px}
-.profile__user-avatar{border-radius:50%;height:120px;-o-object-fit:cover;object-fit:cover;-o-object-position:center;object-position:center;transition:opacity .5s ease-in;width:120px}.profile__user-avatar:hover{cursor:pointer;opacity:.2}
+.profile__avatar-cover{height:120px;position:relative;width:120px}
+.profile__avatar-icon{background-image:url(images/icon-edit.6c7bf05444b9793fdf6e.svg);background-position:50%;background-repeat:no-repeat;background-size:26px;height:100%;position:absolute;transition:z-index .5s ease-in;width:100%;z-index:10}.profile__avatar-icon:hover{z-index:30}
+.profile__user-avatar{border-radius:50%;height:100%;-o-object-fit:cover;object-fit:cover;-o-object-position:center;object-position:center;position:absolute;transition:opacity .5s ease-in;width:100%;z-index:20}.profile__user-avatar:hover{cursor:pointer;opacity:.2}
 .profile__info{display:flex;flex-direction:column;row-gap:8px}@media screen and (max-width:400px){.profile__info{align-items:center}}
 .profile__header{margin:0 42px 0 0;position:relative}@media screen and (max-width:400px){.profile__header{margin:0 28px}}
 .profile__user-name{font-size:42px;font-weight:500;line-height:1.14;margin:0;max-width:325px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}@media screen and (max-width:400px){.profile__user-name{font-size:27px;line-height:1.22;max-width:225px}}

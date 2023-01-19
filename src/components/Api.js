@@ -61,9 +61,7 @@ export default class Api {
     const url = `${this._baseUrl}/cards/${dataCardId}`;
 
     return this._createFetch(url, "DELETE")
-      .then((data) => {
-        console.log("deleteCard", data);
-        // обновляем данные на странице
+      .then(() => {
         callback();
       })
       .catch((err) => {

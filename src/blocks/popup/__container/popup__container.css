@@ -1,4 +1,5 @@
 .popup__container {
+  margin-right: 19px;
   padding: 36px;
   flex: 0 1 430px;
   box-sizing: border-box;

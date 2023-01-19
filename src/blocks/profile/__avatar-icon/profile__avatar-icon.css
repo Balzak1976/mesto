@@ -1,0 +1,16 @@
+.profile__avatar-icon {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url(../../../images/icon/icon-edit.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: 26px;
+  transition: z-index 0.5s ease-in;
+  z-index: 10;
+}
+
+.profile__avatar-icon:hover {
+  z-index: 30;
+}
+

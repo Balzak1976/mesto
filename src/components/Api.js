@@ -5,7 +5,7 @@ export default class Api {
     this._params = params;
   }
 
-  getInitialUserInfo(callback) {
+  getInitialProfile(callback) {
     const url = `${this._baseUrl}/users/me`;
 
     return this._createFetch(url, "GET")

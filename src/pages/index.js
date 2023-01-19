@@ -12,6 +12,7 @@ import {
   validationConfig,
   profileSelectors,
   cardsContainerSelector,
+  apiSettings,
 } from "../utils/settings.js";
 
 import {
@@ -22,13 +23,7 @@ import {
 
 //==================================== API =====================================
 
-const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-57",
-  headers: {
-    authorization: "4f5c1ea4-b5a2-4f77-88d2-569b5dbe0c66",
-    "Content-Type": "application/json",
-  },
-});
+const api = new Api(apiSettings);
 
 //============================== POPUP WITH FORM ===============================
 
@@ -60,7 +55,7 @@ popupDelCard.setEventListeners();
 
 const userInfo = new UserInfo(profileSelectors);
 
-api.getInitialUserInfo((dataUser) => {
+api.getInitialProfile((dataUser) => {
   userInfo.setUserInfo(dataUser);
 });
 
@@ -72,7 +67,8 @@ api.getInitialCards((dataCards) => {
 });
 
 //=========================== VALIDATION ======================================
-const profileFormUpdateAvatarValidator = new FormValidator(
+
+const avatarUpdateFormValidator = new FormValidator(
   validationConfig,
   formUpdateAvatar.formElement
 );
@@ -87,7 +83,7 @@ const cardFormValidator = new FormValidator(
   formCard.formElement
 );
 
-profileFormUpdateAvatarValidator.enableValidation();
+avatarUpdateFormValidator.enableValidation();
 profileFormValidator.enableValidation();
 cardFormValidator.enableValidation();
 
@@ -107,40 +103,38 @@ function renderCard(dataCard) {
 function handleAvatarFormSubmit(inputValues) {
   formUpdateAvatar.setButtonSubmitState();
   // обновляем данные профиля на сервере
-  api.updateAvatar(inputValues, userInfo.setUserInfo)
-    .finally(() => {
-      formUpdateAvatar.setButtonSubmitState(false);
-      formUpdateAvatar.close();
-    });
+  api.updateAvatar(inputValues, userInfo.setUserInfo).finally(() => {
+    formUpdateAvatar.setButtonSubmitState(false);
+    formUpdateAvatar.close();
+    avatarUpdateFormValidator.setInactiveButtonState();
+  });
 }
 
 function handleProfileFormSubmit(inputValues) {
   formProfile.setButtonSubmitState();
   // обновляем данные профиля на сервере
-  api.updateUserInfo(inputValues, userInfo.setUserInfo)
-    .finally(() => {
-      formProfile.setButtonSubmitState(false);
-      formProfile.close();
-    });
+  api.updateUserInfo(inputValues, userInfo.setUserInfo).finally(() => {
+    formProfile.setButtonSubmitState(false);
+    formProfile.close();
+  });
 }
 
 function handleCardFormSubmit(inputValues) {
   formCard.setButtonSubmitState();
 
-  api.addNewCard(inputValues, renderCard)
-    .finally(() => {
-      formCard.setButtonSubmitState(false);
-      formCard.close();
-      // блокируем кнопку при повторном открытии формы, чтобы не создать пустую карточку
-      cardFormValidator.setInactiveButtonState();
-    });
+  api.addNewCard(inputValues, renderCard).finally(() => {
+    formCard.setButtonSubmitState(false);
+    formCard.close();
+    // блокируем кнопку при повторном открытии формы, чтобы не создать пустую карточку
+    cardFormValidator.setInactiveButtonState();
+  });
 }
 
 //========================= PROFILE LISTENER ===================================
 
 profileUpdateAvatarButton.addEventListener("click", () => {
   // скрываем старые сообщения ошибок валидации
-  profileFormUpdateAvatarValidator.hideFormValidationErrors();
+  avatarUpdateFormValidator.hideFormValidationErrors();
 
   formUpdateAvatar.open();
 });

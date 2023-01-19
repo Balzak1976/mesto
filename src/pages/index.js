@@ -17,7 +17,7 @@ import {
 
 import {
   profileEditButton,
-  profileAddButton,
+  profileAddCardButton,
   profileUpdateAvatarButton,
 } from "../utils/const.js";
 
@@ -45,10 +45,19 @@ formCard.setEventListeners();
 const popupImage = new PopupWithImage(".popup_type_zoom-picture");
 popupImage.setEventListeners();
 
-const popupDelCard = new PopupWithSubmit(
-  ".popup_type_del-card",
-  api.deleteCard.bind(api)
-);
+const popupDelCard = new PopupWithSubmit(".popup_type_del-card", {
+  handleFormSubmit: (cardId, deleteCard) => {
+    api.deleteCard
+      .call(api, cardId)
+      .then(() => {
+        deleteCard();
+        popupDelCard.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+});
 popupDelCard.setEventListeners();
 
 //============================== PROMISES ======================================
@@ -104,43 +113,65 @@ function renderCard(dataCard) {
 function handleAvatarFormSubmit(inputValues) {
   formUpdateAvatar.setButtonSubmitState();
   // обновляем данные профиля на сервере
-  api.updateAvatar(inputValues, userInfo.setUserInfo).finally(() => {
-    formUpdateAvatar.setButtonSubmitState(false);
-    formUpdateAvatar.close();
-    avatarUpdateFormValidator.setInactiveButtonState();
-  });
+  api
+    .updateAvatar(inputValues)
+    .then((data) => {
+      userInfo.setUserInfo(data);
+      formUpdateAvatar.close();
+      avatarUpdateFormValidator.setInactiveButtonState();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      formUpdateAvatar.setButtonSubmitState(false);
+    });
 }
 
 function handleProfileFormSubmit(inputValues) {
   formProfile.setButtonSubmitState();
   // обновляем данные профиля на сервере
-  api.updateUserInfo(inputValues, userInfo.setUserInfo).finally(() => {
-    formProfile.setButtonSubmitState(false);
-    formProfile.close();
-  });
+  api
+    .updateUserInfo(inputValues)
+    .then((data) => {
+      userInfo.setUserInfo(data);
+      formProfile.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      formProfile.setButtonSubmitState(false);
+    });
 }
 
 function handleCardFormSubmit(inputValues) {
   formCard.setButtonSubmitState();
 
-  api.addNewCard(inputValues, renderCard).finally(() => {
-    formCard.setButtonSubmitState(false);
-    formCard.close();
-    // блокируем кнопку при повторном открытии формы, чтобы не создать пустую карточку
-    cardFormValidator.setInactiveButtonState();
-  });
+  api
+    .addNewCard(inputValues)
+    .then((data) => {
+      renderCard(data);
+      formCard.close();
+      // блокируем кнопку при повторном открытии формы, чтобы не создать пустую карточку
+      cardFormValidator.setInactiveButtonState();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      formCard.setButtonSubmitState(false);
+    });
 }
 
-//========================= PROFILE LISTENER ===================================
-
-profileUpdateAvatarButton.addEventListener("click", () => {
+function handleAvatarBtnClick() {
   // скрываем старые сообщения ошибок валидации
   avatarUpdateFormValidator.hideFormValidationErrors();
 
   formUpdateAvatar.open();
-});
+}
 
-profileEditButton.addEventListener("click", () => {
+function handleProfileEditBtnClick() {
   // скрываем старые сообщения ошибок валидации
   profileFormValidator.hideFormValidationErrors();
 
@@ -148,11 +179,18 @@ profileEditButton.addEventListener("click", () => {
   formProfile.setInputValues(userInfo.getUserInfo());
 
   formProfile.open();
-});
+}
 
-profileAddButton.addEventListener("click", () => {
+function handleAddCardBtnClick() {
   // скрываем старые сообщения ошибок валидации
   cardFormValidator.hideFormValidationErrors();
 
   formCard.open();
-});
+}
+//========================= PROFILE LISTENER ===================================
+
+profileUpdateAvatarButton.addEventListener("click", handleAvatarBtnClick);
+
+profileEditButton.addEventListener("click", handleProfileEditBtnClick);
+
+profileAddCardButton.addEventListener("click", handleAddCardBtnClick);

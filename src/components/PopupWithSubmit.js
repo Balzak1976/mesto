@@ -1,15 +1,15 @@
 import Popup from "./Popup.js";
 
 export default class PopupWithSubmit extends Popup {
-  constructor(popupSelector, handleFormSubmit) {
-    super(popupSelector)
+  constructor(popupSelector, { handleFormSubmit }) {
+    super(popupSelector);
     this._handleFormSubmit = handleFormSubmit;
     this.formElement = this._popupElement.querySelector(".form");
   }
 
-  open(dataId, deleteCard) {
+  open(cardId, deleteCard) {
     super.open();
-    this._dataId = dataId;
+    this._cardId = cardId;
     // колбэк удаления карточки
     this._deleteCard = deleteCard;
   }
@@ -20,9 +20,7 @@ export default class PopupWithSubmit extends Popup {
     this.formElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
 
-      this._handleFormSubmit(this._dataId, this._deleteCard);
-
-      this.close();
+      this._handleFormSubmit(this._cardId, this._deleteCard);
     });
   }
 }

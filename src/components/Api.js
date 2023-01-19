@@ -15,28 +15,16 @@ export default class Api {
     return this._createFetch(url, "GET");
   }
 
-  updateAvatar(dataAvatar, callback) {
+  updateAvatar(dataAvatar) {
     const url = `${this._baseUrl}/users/me/avatar`;
 
-    return this._createFetch(url, "PATCH", dataAvatar)
-      .then((data) => {
-        callback(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    return this._createFetch(url, "PATCH", dataAvatar);
   }
 
-  updateUserInfo(dataUser, callback) {
+  updateUserInfo(dataUser) {
     const url = `${this._baseUrl}/users/me`;
 
-    return this._createFetch(url, "PATCH", dataUser)
-      .then((data) => {
-        callback(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    return this._createFetch(url, "PATCH", dataUser);
   }
 
   getInitialCards() {
@@ -45,28 +33,17 @@ export default class Api {
     return this._createFetch(url, "GET");
   }
 
-  addNewCard(dataCards, callback) {
+  addNewCard(dataCards) {
     const url = `${this._baseUrl}/cards`;
 
-    return this._createFetch(url, "POST", dataCards)
-      .then((data) => {
-        callback(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    return this._createFetch(url, "POST", dataCards);
   }
 
   deleteCard(dataCardId, callback) {
     const url = `${this._baseUrl}/cards/${dataCardId}`;
 
     return this._createFetch(url, "DELETE")
-      .then(() => {
-        callback();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+
   }
 
   toggleLike(dataCard, isMyLike, callback) {

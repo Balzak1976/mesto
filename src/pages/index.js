@@ -54,17 +54,18 @@ popupDelCard.setEventListeners();
 //============================== PROMISES ======================================
 
 const userInfo = new UserInfo(profileSelectors);
-
-api.getInitialProfile((dataUser) => {
-  userInfo.setUserInfo(dataUser);
-});
-
 const cardsList = new Section({ renderer: renderCard }, cardsContainerSelector);
 
-api.getInitialCards((dataCards) => {
-  cardsList.renderedItems = dataCards;
-  cardsList.renderItems();
-});
+api.createQueueFetch()
+  .then((data) => {
+    const [dataUser, dataCards] = data;
+    userInfo.setUserInfo(dataUser);
+    cardsList.renderedItems = dataCards;
+    cardsList.renderItems();
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 //=========================== VALIDATION ======================================
 

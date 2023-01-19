@@ -5,16 +5,14 @@ export default class Api {
     this._params = params;
   }
 
-  getInitialProfile(callback) {
+  createQueueFetch() {
+    return Promise.all([this.getInitialProfile(), this.getInitialCards()]);
+  }
+
+  getInitialProfile() {
     const url = `${this._baseUrl}/users/me`;
 
-    return this._createFetch(url, "GET")
-      .then((data) => {
-        callback(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    return this._createFetch(url, "GET");
   }
 
   updateAvatar(dataAvatar, callback) {
@@ -41,16 +39,10 @@ export default class Api {
       });
   }
 
-  getInitialCards(callback) {
+  getInitialCards() {
     const url = `${this._baseUrl}/cards`;
 
-    return this._createFetch(url, "GET")
-      .then((data) => {
-        callback(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    return this._createFetch(url, "GET");
   }
 
   addNewCard(dataCards, callback) {

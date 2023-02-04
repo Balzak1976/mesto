@@ -47,8 +47,7 @@ popupImage.setEventListeners();
 
 const popupDelCard = new PopupWithSubmit(".popup_type_del-card", {
   handleFormSubmit: (cardId, deleteCard) => {
-    api.deleteCard
-      .call(api, cardId)
+    api.deleteCard.call(api, cardId)
       .then(() => {
         deleteCard();
         popupDelCard.close();
@@ -113,8 +112,7 @@ function renderCard(dataCard) {
 function handleAvatarFormSubmit(inputValues) {
   formUpdateAvatar.setButtonSubmitState();
   // обновляем данные профиля на сервере
-  api
-    .updateAvatar(inputValues)
+  api.updateAvatar(inputValues)
     .then((data) => {
       userInfo.setUserInfo(data);
       formUpdateAvatar.close();
@@ -131,8 +129,7 @@ function handleAvatarFormSubmit(inputValues) {
 function handleProfileFormSubmit(inputValues) {
   formProfile.setButtonSubmitState();
   // обновляем данные профиля на сервере
-  api
-    .updateUserInfo(inputValues)
+  api.updateUserInfo(inputValues)
     .then((data) => {
       userInfo.setUserInfo(data);
       formProfile.close();
@@ -148,8 +145,7 @@ function handleProfileFormSubmit(inputValues) {
 function handleCardFormSubmit(inputValues) {
   formCard.setButtonSubmitState();
 
-  api
-    .addNewCard(inputValues)
+  api.addNewCard(inputValues)
     .then((data) => {
       renderCard(data);
       formCard.close();

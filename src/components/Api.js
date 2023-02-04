@@ -39,7 +39,7 @@ export default class Api {
     return this._createFetch(url, "POST", dataCards);
   }
 
-  deleteCard(dataCardId, callback) {
+  deleteCard(dataCardId) {
     const url = `${this._baseUrl}/cards/${dataCardId}`;
 
     return this._createFetch(url, "DELETE")
